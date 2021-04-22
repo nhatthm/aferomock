@@ -1,5 +1,6 @@
 # Mock for `spf13/afero`
 
+[![GitHub Releases](https://img.shields.io/github/v/release/nhatthm/aferomock)](https://github.com/nhatthm/aferomock/releases/latest)
 [![Build Status](https://github.com/nhatthm/aferomock/actions/workflows/test.yaml/badge.svg)](https://github.com/nhatthm/aferomock/actions/workflows/test.yaml)
 [![codecov](https://codecov.io/gh/nhatthm/aferomock/branch/master/graph/badge.svg?token=eTdAgDE2vR)](https://codecov.io/gh/nhatthm/aferomock)
 [![Go Report Card](https://goreportcard.com/badge/github.com/nhatthm/aferomock)](https://goreportcard.com/report/github.com/nhatthm/aferomock)
