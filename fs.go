@@ -124,8 +124,8 @@ func (f *Fs) Chtimes(name string, atime time.Time, mtime time.Time) error {
 	return f.Called(name, atime, mtime).Error(0)
 }
 
-// mockFs mocks afero.Fs interface.
-func mockFs(mocks ...func(fs *Fs)) *Fs {
+// NewFs mocks afero.Fs interface.
+func NewFs(mocks ...func(fs *Fs)) *Fs {
 	fs := &Fs{}
 
 	for _, m := range mocks {
@@ -140,7 +140,7 @@ func MockFs(mocks ...func(fs *Fs)) FsMocker {
 	return func(tb testing.TB) *Fs {
 		tb.Helper()
 
-		fs := mockFs(mocks...)
+		fs := NewFs(mocks...)
 
 		tb.Cleanup(func() {
 			assert.True(tb, fs.Mock.AssertExpectations(tb))

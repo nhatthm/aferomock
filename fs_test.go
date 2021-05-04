@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreate(t *testing.T) {
+func TestFs_Create(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -57,7 +57,7 @@ func TestCreate(t *testing.T) {
 	}
 }
 
-func TestMkdir(t *testing.T) {
+func TestFs_Mkdir(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -99,7 +99,7 @@ func TestMkdir(t *testing.T) {
 	}
 }
 
-func TestMkdirAll(t *testing.T) {
+func TestFs_MkdirAll(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -141,7 +141,7 @@ func TestMkdirAll(t *testing.T) {
 	}
 }
 
-func TestOpen(t *testing.T) {
+func TestFs_Open(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -187,7 +187,7 @@ func TestOpen(t *testing.T) {
 	}
 }
 
-func TestOpenFile(t *testing.T) {
+func TestFs_OpenFile(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -233,7 +233,7 @@ func TestOpenFile(t *testing.T) {
 	}
 }
 
-func TestRemove(t *testing.T) {
+func TestFs_Remove(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -275,7 +275,7 @@ func TestRemove(t *testing.T) {
 	}
 }
 
-func TestRemoveAll(t *testing.T) {
+func TestFs_RemoveAll(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -317,7 +317,7 @@ func TestRemoveAll(t *testing.T) {
 	}
 }
 
-func TestRename(t *testing.T) {
+func TestFs_Rename(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -359,7 +359,7 @@ func TestRename(t *testing.T) {
 	}
 }
 
-func TestStat(t *testing.T) {
+func TestFs_Stat(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -405,13 +405,13 @@ func TestStat(t *testing.T) {
 	}
 }
 
-func TestName(t *testing.T) {
+func TestFs_Name(t *testing.T) {
 	t.Parallel()
 
 	assert.Equal(t, "aferomock.Fs", NoMockFs(t).Name())
 }
 
-func TestChmod(t *testing.T) {
+func TestFs_Chmod(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -453,7 +453,7 @@ func TestChmod(t *testing.T) {
 	}
 }
 
-func TestChown(t *testing.T) {
+func TestFs_Chown(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -495,7 +495,7 @@ func TestChown(t *testing.T) {
 	}
 }
 
-func TestChtimes(t *testing.T) {
+func TestFs_Chtimes(t *testing.T) {
 	t.Parallel()
 
 	ts := time.Now()
