@@ -91,16 +91,16 @@ func TestFileInfo_Mode(t *testing.T) {
 		{
 			scenario: "int",
 			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Mode").Return(0777)
+				i.On("Mode").Return(0o777)
 			}),
-			expected: 0777,
+			expected: 0o777,
 		},
 		{
 			scenario: "filemode",
 			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Mode").Return(os.FileMode(0777))
+				i.On("Mode").Return(os.FileMode(0o777))
 			}),
-			expected: 0777,
+			expected: 0o777,
 		},
 	}
 
