@@ -4,7 +4,7 @@ VENDOR_DIR = vendor
 GOLANGCI_LINT_VERSION ?= v1.48.0
 
 GO ?= go
-GOLANGCI_LINT ?= $(BIN_DIR)/golangci-lint-$(GOLANGCI_LINT_VERSION)
+GOLANGCI_LINT ?= $(shell go env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
 
 .PHONY: $(VENDOR_DIR)
 $(VENDOR_DIR):
@@ -23,6 +23,10 @@ test: test-unit
 test-unit:
 	@echo ">> unit test"
 	@$(GO) test -gcflags=-l -coverprofile=unit.coverprofile -covermode=atomic -race ./...
+
+.PHONY: golangci-lint-version
+golangci-lint-version:
+	@echo "::set-output name=GOLANGCI_LINT_VERSION::$(GOLANGCI_LINT_VERSION)"
 
 $(GOLANGCI_LINT):
 	@echo "$(OK_COLOR)==> Installing golangci-lint $(GOLANGCI_LINT_VERSION)$(NO_COLOR)"; \
