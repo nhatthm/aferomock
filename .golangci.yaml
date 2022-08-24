@@ -21,6 +21,7 @@ linters:
   enable-all: true
   disable:
     - exhaustivestruct
+    - exhaustruct
     - forbidigo
     - forcetypeassert
     - gci
@@ -29,11 +30,17 @@ linters:
     - gomnd
     - ifshort
     - interfacer
+    - ireturn
     - lll
     - maligned
+    - nonamedreturns
+    - nosnakecase
+    - nolintlint # https://github.com/golangci/golangci-lint/issues/3063
     - paralleltest
     - scopelint
+    - tagliatelle
     - testpackage
+    - varnamelen
     - wrapcheck
 
 issues:

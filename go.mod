@@ -1,4 +1,4 @@
-module github.com/nhatthm/aferomock
+module go.nhat.io/aferomock
 
 go 1.17
 
