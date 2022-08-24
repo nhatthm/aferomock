@@ -3,20 +3,20 @@
 [![GitHub Releases](https://img.shields.io/github/v/release/nhatthm/aferomock)](https://github.com/nhatthm/aferomock/releases/latest)
 [![Build Status](https://github.com/nhatthm/aferomock/actions/workflows/test.yaml/badge.svg)](https://github.com/nhatthm/aferomock/actions/workflows/test.yaml)
 [![codecov](https://codecov.io/gh/nhatthm/aferomock/branch/master/graph/badge.svg?token=eTdAgDE2vR)](https://codecov.io/gh/nhatthm/aferomock)
-[![Go Report Card](https://goreportcard.com/badge/github.com/nhatthm/aferomock)](https://goreportcard.com/report/github.com/nhatthm/aferomock)
-[![GoDevDoc](https://img.shields.io/badge/dev-doc-00ADD8?logo=go)](https://pkg.go.dev/github.com/nhatthm/aferomock)
+[![Go Report Card](https://goreportcard.com/badge/go.nhat.io/aferomock)](https://goreportcard.com/report/go.nhat.io/aferomock)
+[![GoDevDoc](https://img.shields.io/badge/dev-doc-00ADD8?logo=go)](https://pkg.go.dev/go.nhat.io/aferomock)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=PJZSGJN57TDJY)
 
 **aferomock** is a mock library for [spf13/afero](https://github.com/spf13/afero)
 
 ## Prerequisites
 
-- `Go >= 1.16`
+- `Go >= 1.17`
 
 ## Install
 
 ```bash
-go get github.com/nhatthm/aferomock
+go get go.nhat.io/aferomock
 ```
 
 ## Examples
@@ -29,8 +29,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/nhatthm/aferomock"
 	"github.com/stretchr/testify/assert"
+	"go.nhat.io/aferomock"
 )
 
 func TestMyPackage(t *testing.T) {
