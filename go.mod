@@ -3,7 +3,7 @@ module go.nhat.io/aferomock
 go 1.17
 
 require (
-	github.com/spf13/afero v1.9.3
+	github.com/spf13/afero v1.9.4
 	github.com/stretchr/testify v1.8.1
 )
 
