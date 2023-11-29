@@ -7,7 +7,7 @@ on:
 
 env:
   GO111MODULE: "on"
-  GO_VERSION: "1.19.x"
+  GO_VERSION: "1.21.x"
 
 jobs:
   lint:
