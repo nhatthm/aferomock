@@ -1,3 +1,5 @@
+MODULE_NAME=aferomock
+
 BIN_DIR = bin
 VENDOR_DIR = vendor
 
@@ -24,9 +26,10 @@ test-unit:
 	@echo ">> unit test"
 	@$(GO) test -gcflags=-l -coverprofile=unit.coverprofile -covermode=atomic -race ./...
 
-.PHONY: golangci-lint-version
-golangci-lint-version:
-	@echo "::set-output name=GOLANGCI_LINT_VERSION::$(GOLANGCI_LINT_VERSION)"
+.PHONY: $(GITHUB_OUTPUT)
+$(GITHUB_OUTPUT):
+	@echo "MODULE_NAME=$(MODULE_NAME)" >>"$@"
+	@echo "GOLANGCI_LINT_VERSION=$(GOLANGCI_LINT_VERSION)" >>"$@"
 
 $(GOLANGCI_LINT):
 	@echo "$(OK_COLOR)==> Installing golangci-lint $(GOLANGCI_LINT_VERSION)$(NO_COLOR)"; \
