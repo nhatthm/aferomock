@@ -1,0 +1,14 @@
+dry-run: false
+with-expecter: false
+mockname: "{{.InterfaceName}}"
+filename: "{{ .InterfaceName | snakecase }}.go"
+dir: "."
+outpkg: aferomock
+packages:
+  github.com/spf13/afero:
+    config:
+      include-regex: "Fs|File"
+
+  io/fs:
+    config:
+      include-regex: "FileInfo"

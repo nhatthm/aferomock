@@ -1,4 +1,4 @@
-package aferomock
+package aferomock_test
 
 import (
 	"errors"
@@ -9,6 +9,8 @@ import (
 	"github.com/spf13/afero"
 	"github.com/spf13/afero/mem"
 	"github.com/stretchr/testify/assert"
+
+	"go.nhat.io/aferomock"
 )
 
 func TestFs_Create(t *testing.T) {
@@ -16,13 +18,13 @@ func TestFs_Create(t *testing.T) {
 
 	testCases := []struct {
 		scenario       string
-		mockFs         FsMocker
+		mockFs         aferomock.FsMocker
 		expectedResult afero.File
 		expectedError  string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Create", "test.txt").
 					Return(&mem.File{}, nil)
 			}),
@@ -30,7 +32,7 @@ func TestFs_Create(t *testing.T) {
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Create", "test.txt").
 					Return(nil, errors.New("create error"))
 			}),
@@ -62,19 +64,19 @@ func TestFs_Mkdir(t *testing.T) {
 
 	testCases := []struct {
 		scenario      string
-		mockFs        FsMocker
+		mockFs        aferomock.FsMocker
 		expectedError string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Mkdir", "test", os.ModePerm).
 					Return(nil)
 			}),
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Mkdir", "test", os.ModePerm).
 					Return(errors.New("mkdir error"))
 			}),
@@ -104,19 +106,19 @@ func TestFs_MkdirAll(t *testing.T) {
 
 	testCases := []struct {
 		scenario      string
-		mockFs        FsMocker
+		mockFs        aferomock.FsMocker
 		expectedError string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("MkdirAll", "path/test", os.ModePerm).
 					Return(nil)
 			}),
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("MkdirAll", "path/test", os.ModePerm).
 					Return(errors.New("mkdir all error"))
 			}),
@@ -146,13 +148,13 @@ func TestFs_Open(t *testing.T) {
 
 	testCases := []struct {
 		scenario       string
-		mockFs         FsMocker
+		mockFs         aferomock.FsMocker
 		expectedResult afero.File
 		expectedError  string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Open", "test.txt").
 					Return(&mem.File{}, nil)
 			}),
@@ -160,7 +162,7 @@ func TestFs_Open(t *testing.T) {
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Open", "test.txt").
 					Return(nil, errors.New("create error"))
 			}),
@@ -192,13 +194,13 @@ func TestFs_OpenFile(t *testing.T) {
 
 	testCases := []struct {
 		scenario       string
-		mockFs         FsMocker
+		mockFs         aferomock.FsMocker
 		expectedResult afero.File
 		expectedError  string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
 					Return(&mem.File{}, nil)
 			}),
@@ -206,7 +208,7 @@ func TestFs_OpenFile(t *testing.T) {
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
 					Return(nil, errors.New("create error"))
 			}),
@@ -238,19 +240,19 @@ func TestFs_Remove(t *testing.T) {
 
 	testCases := []struct {
 		scenario      string
-		mockFs        FsMocker
+		mockFs        aferomock.FsMocker
 		expectedError string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Remove", "test.txt").
 					Return(nil)
 			}),
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Remove", "test.txt").
 					Return(errors.New("remove error"))
 			}),
@@ -280,19 +282,19 @@ func TestFs_RemoveAll(t *testing.T) {
 
 	testCases := []struct {
 		scenario      string
-		mockFs        FsMocker
+		mockFs        aferomock.FsMocker
 		expectedError string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("RemoveAll", "path/test").
 					Return(nil)
 			}),
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("RemoveAll", "path/test").
 					Return(errors.New("remove all error"))
 			}),
@@ -322,19 +324,19 @@ func TestFs_Rename(t *testing.T) {
 
 	testCases := []struct {
 		scenario      string
-		mockFs        FsMocker
+		mockFs        aferomock.FsMocker
 		expectedError string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Rename", "oldname", "newname").
 					Return(nil)
 			}),
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Rename", "oldname", "newname").
 					Return(errors.New("rename error"))
 			}),
@@ -364,13 +366,13 @@ func TestFs_Stat(t *testing.T) {
 
 	testCases := []struct {
 		scenario       string
-		mockFs         FsMocker
+		mockFs         aferomock.FsMocker
 		expectedResult os.FileInfo
 		expectedError  string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Stat", "test.txt").
 					Return(&mem.FileInfo{}, nil)
 			}),
@@ -378,7 +380,7 @@ func TestFs_Stat(t *testing.T) {
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Stat", "test.txt").
 					Return(nil, errors.New("stat error"))
 			}),
@@ -408,7 +410,7 @@ func TestFs_Stat(t *testing.T) {
 func TestFs_Name(t *testing.T) {
 	t.Parallel()
 
-	assert.Equal(t, "aferomock.Fs", NoMockFs(t).Name())
+	assert.Equal(t, "aferomock.Fs", aferomock.NopFs(t).Name())
 }
 
 func TestFs_Chmod(t *testing.T) {
@@ -416,19 +418,19 @@ func TestFs_Chmod(t *testing.T) {
 
 	testCases := []struct {
 		scenario      string
-		mockFs        FsMocker
+		mockFs        aferomock.FsMocker
 		expectedError string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Chmod", "test.txt", os.ModePerm).
 					Return(nil)
 			}),
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Chmod", "test.txt", os.ModePerm).
 					Return(errors.New("chmod error"))
 			}),
@@ -458,19 +460,19 @@ func TestFs_Chown(t *testing.T) {
 
 	testCases := []struct {
 		scenario      string
-		mockFs        FsMocker
+		mockFs        aferomock.FsMocker
 		expectedError string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Chown", "test.txt", 0, 0).
 					Return(nil)
 			}),
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Chown", "test.txt", 0, 0).
 					Return(errors.New("chown error"))
 			}),
@@ -502,19 +504,19 @@ func TestFs_Chtimes(t *testing.T) {
 
 	testCases := []struct {
 		scenario      string
-		mockFs        FsMocker
+		mockFs        aferomock.FsMocker
 		expectedError string
 	}{
 		{
 			scenario: "no error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Chtimes", "test.txt", ts, ts).
 					Return(nil)
 			}),
 		},
 		{
 			scenario: "error",
-			mockFs: MockFs(func(fs *Fs) {
+			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
 				fs.On("Chtimes", "test.txt", ts, ts).
 					Return(errors.New("chtimes error"))
 			}),
