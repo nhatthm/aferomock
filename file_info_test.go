@@ -1,4 +1,4 @@
-package aferomock
+package aferomock_test
 
 import (
 	"os"
@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+
+	"go.nhat.io/aferomock"
 )
 
 func TestFileInfo_Name(t *testing.T) {
@@ -13,20 +15,29 @@ func TestFileInfo_Name(t *testing.T) {
 
 	testCases := []struct {
 		scenario     string
-		mockFileInfo FileInfoMocker
+		mockFileInfo aferomock.FileInfoMocker
 		expected     string
 	}{
 		{
+			scenario: "callback",
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Name").Return(func() string {
+					return "callback"
+				})
+			}),
+			expected: "callback",
+		},
+		{
 			scenario: "not empty",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Name").Return("name")
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Name").Return("name")
 			}),
 			expected: "name",
 		},
 		{
 			scenario: "empty",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Name").Return("")
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Name").Return("")
 			}),
 			expected: "",
 		},
@@ -49,20 +60,22 @@ func TestFileInfo_Size(t *testing.T) {
 
 	testCases := []struct {
 		scenario     string
-		mockFileInfo FileInfoMocker
+		mockFileInfo aferomock.FileInfoMocker
 		expected     int64
 	}{
 		{
-			scenario: "int",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Size").Return(10)
+			scenario: "callback",
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Size").Return(func() int64 {
+					return 10
+				})
 			}),
 			expected: 10,
 		},
 		{
-			scenario: "int",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Size").Return(int64(20))
+			scenario: "int64",
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Size").Return(int64(20))
 			}),
 			expected: 20,
 		},
@@ -85,20 +98,22 @@ func TestFileInfo_Mode(t *testing.T) {
 
 	testCases := []struct {
 		scenario     string
-		mockFileInfo FileInfoMocker
+		mockFileInfo aferomock.FileInfoMocker
 		expected     os.FileMode
 	}{
 		{
-			scenario: "int",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Mode").Return(0o777)
+			scenario: "callback",
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Mode").Return(func() os.FileMode {
+					return os.FileMode(0o644)
+				})
 			}),
-			expected: 0o777,
+			expected: 0o644,
 		},
 		{
 			scenario: "filemode",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Mode").Return(os.FileMode(0o777))
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Mode").Return(os.FileMode(0o777))
 			}),
 			expected: 0o777,
 		},
@@ -123,19 +138,28 @@ func TestFileInfo_ModTime(t *testing.T) {
 
 	testCases := []struct {
 		scenario     string
-		mockFileInfo FileInfoMocker
+		mockFileInfo aferomock.FileInfoMocker
 		expected     time.Time
 	}{
 		{
+			scenario: "callback",
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("ModTime").Return(func() time.Time {
+					return ts
+				})
+			}),
+			expected: ts,
+		},
+		{
 			scenario: "empty",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("ModTime").Return(time.Time{})
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("ModTime").Return(time.Time{})
 			}),
 		},
 		{
 			scenario: "not empty",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("ModTime").Return(ts)
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("ModTime").Return(ts)
 			}),
 			expected: ts,
 		},
@@ -158,19 +182,28 @@ func TestFileInfo_IsDir(t *testing.T) {
 
 	testCases := []struct {
 		scenario     string
-		mockFileInfo FileInfoMocker
+		mockFileInfo aferomock.FileInfoMocker
 		expected     bool
 	}{
 		{
+			scenario: "callback",
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("IsDir").Return(func() bool {
+					return true
+				})
+			}),
+			expected: true,
+		},
+		{
 			scenario: "false",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("IsDir").Return(false)
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("IsDir").Return(false)
 			}),
 		},
 		{
 			scenario: "true",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("IsDir").Return(true)
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("IsDir").Return(true)
 			}),
 			expected: true,
 		},
@@ -193,13 +226,13 @@ func TestFileInfo_Sys(t *testing.T) {
 
 	testCases := []struct {
 		scenario     string
-		mockFileInfo FileInfoMocker
+		mockFileInfo aferomock.FileInfoMocker
 		expected     interface{}
 	}{
 		{
 			scenario: "header",
-			mockFileInfo: MockFileInfo(func(i *FileInfo) {
-				i.On("Sys").Return(&struct{}{})
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Sys").Return(&struct{}{})
 			}),
 			expected: &struct{}{},
 		},
