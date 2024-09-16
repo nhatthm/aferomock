@@ -36,7 +36,7 @@ func TestFileCallbacks_Close(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				CloseFunc: func() error {
@@ -46,7 +46,7 @@ func TestFileCallbacks_Close(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				CloseFunc: func() error {
@@ -63,7 +63,7 @@ func TestFileCallbacks_Close(t *testing.T) {
 
 			actual := aferomock.OverrideFile(tc.mockFile(t), tc.fileCallbacks).Close()
 
-			require.Equal(t, actual, tc.expectedError)
+			require.Equal(t, tc.expectedError, actual)
 		})
 	}
 }
@@ -93,7 +93,7 @@ func TestFileCallbacks_Name(t *testing.T) {
 			expectedResult: "name",
 		},
 		{
-			scenario: "wrapped - no name",
+			scenario: "overridden - no name",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				NameFunc: func() string {
@@ -102,7 +102,7 @@ func TestFileCallbacks_Name(t *testing.T) {
 			},
 		},
 		{
-			scenario: "wrapped - has name",
+			scenario: "overridden - has name",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				NameFunc: func() string {
@@ -152,7 +152,7 @@ func TestFileCallbacks_Read(t *testing.T) {
 			expectedResult: 5,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				ReadFunc: func([]byte) (int, error) {
@@ -162,7 +162,7 @@ func TestFileCallbacks_Read(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				ReadFunc: func(b []byte) (int, error) {
@@ -213,7 +213,7 @@ func TestFileCallbacks_ReadAt(t *testing.T) {
 			expectedResult: 4,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				ReadAtFunc: func([]byte, int64) (int, error) {
@@ -223,7 +223,7 @@ func TestFileCallbacks_ReadAt(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				ReadAtFunc: func(b []byte, off int64) (int, error) {
@@ -276,7 +276,7 @@ func TestFileCallbacks_Readdir(t *testing.T) {
 			expectedResult: []fs.FileInfo{fi},
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				ReaddirFunc: func(int) ([]fs.FileInfo, error) {
@@ -286,7 +286,7 @@ func TestFileCallbacks_Readdir(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				ReaddirFunc: func(int) ([]fs.FileInfo, error) {
@@ -337,7 +337,7 @@ func TestFileCallbacks_Readdirnames(t *testing.T) {
 			expectedResult: []string{"foobar"},
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				ReaddirnamesFunc: func(int) ([]string, error) {
@@ -347,7 +347,7 @@ func TestFileCallbacks_Readdirnames(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				ReaddirnamesFunc: func(int) ([]string, error) {
@@ -398,7 +398,7 @@ func TestFileCallbacks_Seek(t *testing.T) {
 			expectedResult: int64(10),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				SeekFunc: func(int64, int) (int64, error) {
@@ -408,7 +408,7 @@ func TestFileCallbacks_Seek(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				SeekFunc: func(int64, int) (int64, error) {
@@ -461,7 +461,7 @@ func TestFileCallbacks_Stat(t *testing.T) {
 			expectedResult: fi,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				StatFunc: func() (fs.FileInfo, error) {
@@ -471,7 +471,7 @@ func TestFileCallbacks_Stat(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				StatFunc: func() (fs.FileInfo, error) {
@@ -520,7 +520,7 @@ func TestFileCallbacks_Sync(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				SyncFunc: func() error {
@@ -530,7 +530,7 @@ func TestFileCallbacks_Sync(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				SyncFunc: func() error {
@@ -547,7 +547,7 @@ func TestFileCallbacks_Sync(t *testing.T) {
 
 			actual := aferomock.OverrideFile(tc.mockFile(t), tc.fileCallbacks).Sync()
 
-			require.Equal(t, actual, tc.expectedError)
+			require.Equal(t, tc.expectedError, actual)
 		})
 	}
 }
@@ -577,7 +577,7 @@ func TestFileCallbacks_Truncate(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				TruncateFunc: func(int64) error {
@@ -587,7 +587,7 @@ func TestFileCallbacks_Truncate(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				TruncateFunc: func(int64) error {
@@ -636,7 +636,7 @@ func TestFileCallbacks_Write(t *testing.T) {
 			expectedResult: 5,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				WriteFunc: func([]byte) (int, error) {
@@ -646,7 +646,7 @@ func TestFileCallbacks_Write(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				WriteFunc: func(b []byte) (int, error) {
@@ -697,7 +697,7 @@ func TestFileCallbacks_WriteAt(t *testing.T) {
 			expectedResult: 4,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				WriteAtFunc: func([]byte, int64) (int, error) {
@@ -707,7 +707,7 @@ func TestFileCallbacks_WriteAt(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				WriteAtFunc: func(b []byte, off int64) (int, error) {
@@ -758,7 +758,7 @@ func TestFileCallbacks_WriteString(t *testing.T) {
 			expectedResult: 5,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				WriteStringFunc: func(string) (int, error) {
@@ -768,7 +768,7 @@ func TestFileCallbacks_WriteString(t *testing.T) {
 			expectedError: errors.New("error"),
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFile: aferomock.NopFile,
 			fileCallbacks: aferomock.FileCallbacks{
 				WriteStringFunc: func(s string) (int, error) {

@@ -54,7 +54,7 @@ func TestFile_Close(t *testing.T) {
 
 			actual := tc.mockFile(t).Close()
 
-			require.Equal(t, actual, tc.expectedError)
+			require.Equal(t, tc.expectedError, actual)
 		})
 	}
 }
@@ -712,7 +712,7 @@ func TestFile_Sync(t *testing.T) {
 
 			actual := tc.mockFile(t).Sync()
 
-			require.Equal(t, actual, tc.expectedError)
+			require.Equal(t, tc.expectedError, actual)
 		})
 	}
 }

@@ -41,7 +41,7 @@ func TestFsCallbacks_Create(t *testing.T) {
 			expectedResult: f,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				CreateFunc: func(string) (afero.File, error) {
@@ -51,7 +51,7 @@ func TestFsCallbacks_Create(t *testing.T) {
 			expectedError: "create error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				CreateFunc: func(string) (afero.File, error) {
@@ -106,7 +106,7 @@ func TestFsCallbacks_Mkdir(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				MkdirFunc: func(string, os.FileMode) error {
@@ -116,7 +116,7 @@ func TestFsCallbacks_Mkdir(t *testing.T) {
 			expectedError: "mkdir error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				MkdirFunc: func(string, os.FileMode) error {
@@ -168,7 +168,7 @@ func TestFsCallbacks_MkdirAll(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				MkdirAllFunc: func(string, os.FileMode) error {
@@ -178,7 +178,7 @@ func TestFsCallbacks_MkdirAll(t *testing.T) {
 			expectedError: "mkdir all error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				MkdirAllFunc: func(string, os.FileMode) error {
@@ -234,7 +234,7 @@ func TestFsCallbacks_Open(t *testing.T) {
 			expectedResult: f,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				OpenFunc: func(string) (afero.File, error) {
@@ -244,7 +244,7 @@ func TestFsCallbacks_Open(t *testing.T) {
 			expectedError: "create error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				OpenFunc: func(string) (afero.File, error) {
@@ -303,7 +303,7 @@ func TestFsCallbacks_OpenFile(t *testing.T) {
 			expectedResult: f,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				OpenFileFunc: func(string, int, os.FileMode) (afero.File, error) {
@@ -313,7 +313,7 @@ func TestFsCallbacks_OpenFile(t *testing.T) {
 			expectedError: "open file error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				OpenFileFunc: func(string, int, os.FileMode) (afero.File, error) {
@@ -368,7 +368,7 @@ func TestFsCallbacks_Remove(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				RemoveFunc: func(string) error {
@@ -378,7 +378,7 @@ func TestFsCallbacks_Remove(t *testing.T) {
 			expectedError: "remove error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				RemoveFunc: func(string) error {
@@ -430,7 +430,7 @@ func TestFsCallbacks_RemoveAll(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				RemoveAllFunc: func(string) error {
@@ -440,7 +440,7 @@ func TestFsCallbacks_RemoveAll(t *testing.T) {
 			expectedError: "remove all error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				RemoveAllFunc: func(string) error {
@@ -492,7 +492,7 @@ func TestFsCallbacks_Rename(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				RenameFunc: func(string, string) error {
@@ -502,7 +502,7 @@ func TestFsCallbacks_Rename(t *testing.T) {
 			expectedError: "rename error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				RenameFunc: func(string, string) error {
@@ -558,7 +558,7 @@ func TestFsCallbacks_Stat(t *testing.T) {
 			expectedResult: fi,
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				StatFunc: func(string) (os.FileInfo, error) {
@@ -568,7 +568,7 @@ func TestFsCallbacks_Stat(t *testing.T) {
 			expectedError: "stat error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				StatFunc: func(string) (os.FileInfo, error) {
@@ -611,13 +611,13 @@ func TestFsCallbacks_Name(t *testing.T) {
 			expectedResult: "aferomock.Fs",
 		},
 		{
-			scenario: "wrapped",
+			scenario: "overridden",
 			fsCallbacks: aferomock.FsCallbacks{
 				NameFunc: func() string {
-					return "wrapped"
+					return "overridden"
 				},
 			},
-			expectedResult: "wrapped",
+			expectedResult: "overridden",
 		},
 	}
 
@@ -659,7 +659,7 @@ func TestFsCallbacks_Chmod(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				ChmodFunc: func(string, os.FileMode) error {
@@ -669,7 +669,7 @@ func TestFsCallbacks_Chmod(t *testing.T) {
 			expectedError: "chmod error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				ChmodFunc: func(string, os.FileMode) error {
@@ -721,7 +721,7 @@ func TestFsCallbacks_Chown(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				ChownFunc: func(string, int, int) error {
@@ -731,7 +731,7 @@ func TestFsCallbacks_Chown(t *testing.T) {
 			expectedError: "chown error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				ChownFunc: func(string, int, int) error {
@@ -785,7 +785,7 @@ func TestFsCallbacks_Chtimes(t *testing.T) {
 			}),
 		},
 		{
-			scenario: "wrapped - error",
+			scenario: "overridden - error",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				ChtimesFunc: func(string, time.Time, time.Time) error {
@@ -795,7 +795,7 @@ func TestFsCallbacks_Chtimes(t *testing.T) {
 			expectedError: "chtimes error",
 		},
 		{
-			scenario: "wrapped - success",
+			scenario: "overridden - success",
 			mockFs:   aferomock.NopFs,
 			fsCallbacks: aferomock.FsCallbacks{
 				ChtimesFunc: func(string, time.Time, time.Time) error {
@@ -828,5 +828,5 @@ func TestWrapFs(t *testing.T) {
 	fs := aferomock.WrapFs(aferomock.NopFs(t), aferomock.WrappedFs{})
 
 	assert.NotNil(t, fs)
-	assert.IsType(t, &aferomock.FsCallbacks{}, fs)
+	assert.IsType(t, aferomock.FsCallbacks{}, fs)
 }
