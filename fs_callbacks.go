@@ -31,129 +31,129 @@ type FsCallbacks struct {
 }
 
 // Chmod satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Chmod(name string, mode fs.FileMode) error {
+func (fs FsCallbacks) Chmod(name string, mode fs.FileMode) error {
 	return fs.ChmodFunc(name, mode)
 }
 
 // Chown satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Chown(name string, uid int, gid int) error {
+func (fs FsCallbacks) Chown(name string, uid int, gid int) error {
 	return fs.ChownFunc(name, uid, gid)
 }
 
 // Chtimes satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Chtimes(name string, atime time.Time, mtime time.Time) error {
+func (fs FsCallbacks) Chtimes(name string, atime time.Time, mtime time.Time) error {
 	return fs.ChtimesFunc(name, atime, mtime)
 }
 
 // Create satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Create(name string) (afero.File, error) {
+func (fs FsCallbacks) Create(name string) (afero.File, error) {
 	return fs.CreateFunc(name)
 }
 
 // Mkdir satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Mkdir(name string, perm fs.FileMode) error {
+func (fs FsCallbacks) Mkdir(name string, perm fs.FileMode) error {
 	return fs.MkdirFunc(name, perm)
 }
 
 // MkdirAll satisfies the afero.Fs interface.
-func (fs *FsCallbacks) MkdirAll(path string, perm fs.FileMode) error {
+func (fs FsCallbacks) MkdirAll(path string, perm fs.FileMode) error {
 	return fs.MkdirAllFunc(path, perm)
 }
 
 // Name satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Name() string {
+func (fs FsCallbacks) Name() string {
 	return fs.NameFunc()
 }
 
 // Open satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Open(name string) (afero.File, error) {
+func (fs FsCallbacks) Open(name string) (afero.File, error) {
 	return fs.OpenFunc(name)
 }
 
 // OpenFile satisfies the afero.Fs interface.
-func (fs *FsCallbacks) OpenFile(name string, flag int, perm fs.FileMode) (afero.File, error) {
+func (fs FsCallbacks) OpenFile(name string, flag int, perm fs.FileMode) (afero.File, error) {
 	return fs.OpenFileFunc(name, flag, perm)
 }
 
 // Remove satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Remove(name string) error {
+func (fs FsCallbacks) Remove(name string) error {
 	return fs.RemoveFunc(name)
 }
 
 // RemoveAll satisfies the afero.Fs interface.
-func (fs *FsCallbacks) RemoveAll(path string) error {
+func (fs FsCallbacks) RemoveAll(path string) error {
 	return fs.RemoveAllFunc(path)
 }
 
 // Rename satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Rename(oldname string, newname string) error {
+func (fs FsCallbacks) Rename(oldname string, newname string) error {
 	return fs.RenameFunc(oldname, newname)
 }
 
 // Stat satisfies the afero.Fs interface.
-func (fs *FsCallbacks) Stat(name string) (fs.FileInfo, error) {
+func (fs FsCallbacks) Stat(name string) (fs.FileInfo, error) {
 	return fs.StatFunc(name)
 }
 
 // WrapFs wraps a afero.Fs with custom callbacks.
 // Deprecated: Use OverrideFs instead.
-func WrapFs(fs afero.Fs, callbacks WrappedFs) *FsCallbacks {
+func WrapFs(fs afero.Fs, callbacks WrappedFs) FsCallbacks {
 	return OverrideFs(fs, callbacks)
 }
 
-// OverrideFs wraps an afero.Fs with custom callbacks.
-func OverrideFs(fs afero.Fs, callbacks FsCallbacks) *FsCallbacks { //nolint: cyclop,dupl
-	if callbacks.ChmodFunc == nil {
-		callbacks.ChmodFunc = fs.Chmod
+// OverrideFs overrides a afero.Fs with custom callbacks.
+func OverrideFs(fs afero.Fs, c FsCallbacks) FsCallbacks { //nolint: cyclop,dupl
+	if c.ChmodFunc == nil {
+		c.ChmodFunc = fs.Chmod
 	}
 
-	if callbacks.ChownFunc == nil {
-		callbacks.ChownFunc = fs.Chown
+	if c.ChownFunc == nil {
+		c.ChownFunc = fs.Chown
 	}
 
-	if callbacks.ChtimesFunc == nil {
-		callbacks.ChtimesFunc = fs.Chtimes
+	if c.ChtimesFunc == nil {
+		c.ChtimesFunc = fs.Chtimes
 	}
 
-	if callbacks.CreateFunc == nil {
-		callbacks.CreateFunc = fs.Create
+	if c.CreateFunc == nil {
+		c.CreateFunc = fs.Create
 	}
 
-	if callbacks.MkdirFunc == nil {
-		callbacks.MkdirFunc = fs.Mkdir
+	if c.MkdirFunc == nil {
+		c.MkdirFunc = fs.Mkdir
 	}
 
-	if callbacks.MkdirAllFunc == nil {
-		callbacks.MkdirAllFunc = fs.MkdirAll
+	if c.MkdirAllFunc == nil {
+		c.MkdirAllFunc = fs.MkdirAll
 	}
 
-	if callbacks.NameFunc == nil {
-		callbacks.NameFunc = fs.Name
+	if c.NameFunc == nil {
+		c.NameFunc = fs.Name
 	}
 
-	if callbacks.OpenFunc == nil {
-		callbacks.OpenFunc = fs.Open
+	if c.OpenFunc == nil {
+		c.OpenFunc = fs.Open
 	}
 
-	if callbacks.OpenFileFunc == nil {
-		callbacks.OpenFileFunc = fs.OpenFile
+	if c.OpenFileFunc == nil {
+		c.OpenFileFunc = fs.OpenFile
 	}
 
-	if callbacks.RemoveFunc == nil {
-		callbacks.RemoveFunc = fs.Remove
+	if c.RemoveFunc == nil {
+		c.RemoveFunc = fs.Remove
 	}
 
-	if callbacks.RemoveAllFunc == nil {
-		callbacks.RemoveAllFunc = fs.RemoveAll
+	if c.RemoveAllFunc == nil {
+		c.RemoveAllFunc = fs.RemoveAll
 	}
 
-	if callbacks.RenameFunc == nil {
-		callbacks.RenameFunc = fs.Rename
+	if c.RenameFunc == nil {
+		c.RenameFunc = fs.Rename
 	}
 
-	if callbacks.StatFunc == nil {
-		callbacks.StatFunc = fs.Stat
+	if c.StatFunc == nil {
+		c.StatFunc = fs.Stat
 	}
 
-	return &callbacks
+	return c
 }
