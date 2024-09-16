@@ -821,3 +821,12 @@ func TestFsCallbacks_Chtimes(t *testing.T) {
 		})
 	}
 }
+
+func TestWrapFs(t *testing.T) {
+	t.Parallel()
+
+	fs := aferomock.WrapFs(aferomock.NopFs(t), aferomock.WrappedFs{})
+
+	assert.NotNil(t, fs)
+	assert.IsType(t, &aferomock.FsCallbacks{}, fs)
+}

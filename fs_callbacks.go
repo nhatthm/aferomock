@@ -97,7 +97,7 @@ func (fs *FsCallbacks) Stat(name string) (fs.FileInfo, error) {
 
 // WrapFs wraps a afero.Fs with custom callbacks.
 // Deprecated: Use OverrideFs instead.
-func WrapFs(fs afero.Fs, callbacks FsCallbacks) *FsCallbacks {
+func WrapFs(fs afero.Fs, callbacks WrappedFs) *FsCallbacks {
 	return OverrideFs(fs, callbacks)
 }
 
