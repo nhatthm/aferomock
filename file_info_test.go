@@ -28,18 +28,17 @@ func TestFileInfo_Name(t *testing.T) {
 			expected: "callback",
 		},
 		{
-			scenario: "not empty",
+			scenario: "no name",
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Name").Return("")
+			}),
+		},
+		{
+			scenario: "has name",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
 				fi.On("Name").Return("name")
 			}),
 			expected: "name",
-		},
-		{
-			scenario: "empty",
-			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("Name").Return("")
-			}),
-			expected: "",
 		},
 	}
 
@@ -53,6 +52,16 @@ func TestFileInfo_Name(t *testing.T) {
 			assert.Equal(t, tc.expected, result)
 		})
 	}
+}
+
+func TestFileInfo_Name_NoReturnValuePanic(t *testing.T) {
+	t.Parallel()
+
+	assert.Panics(t, func() {
+		aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+			fi.On("Name")
+		})(t).Name()
+	})
 }
 
 func TestFileInfo_Size(t *testing.T) {
@@ -93,6 +102,16 @@ func TestFileInfo_Size(t *testing.T) {
 	}
 }
 
+func TestFileInfo_Size_NoReturnValuePanic(t *testing.T) {
+	t.Parallel()
+
+	assert.Panics(t, func() {
+		aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+			fi.On("Size")
+		})(t).Size()
+	})
+}
+
 func TestFileInfo_Mode(t *testing.T) {
 	t.Parallel()
 
@@ -129,6 +148,16 @@ func TestFileInfo_Mode(t *testing.T) {
 			assert.Equal(t, tc.expected, result)
 		})
 	}
+}
+
+func TestFileInfo_Mode_NoReturnValuePanic(t *testing.T) {
+	t.Parallel()
+
+	assert.Panics(t, func() {
+		aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+			fi.On("Mode")
+		})(t).Mode()
+	})
 }
 
 func TestFileInfo_ModTime(t *testing.T) {
@@ -177,6 +206,16 @@ func TestFileInfo_ModTime(t *testing.T) {
 	}
 }
 
+func TestFileInfo_ModTime_NoReturnValuePanic(t *testing.T) {
+	t.Parallel()
+
+	assert.Panics(t, func() {
+		aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+			fi.On("ModTime")
+		})(t).ModTime()
+	})
+}
+
 func TestFileInfo_IsDir(t *testing.T) {
 	t.Parallel()
 
@@ -221,6 +260,16 @@ func TestFileInfo_IsDir(t *testing.T) {
 	}
 }
 
+func TestFileInfo_IsDir_NoReturnValuePanic(t *testing.T) {
+	t.Parallel()
+
+	assert.Panics(t, func() {
+		aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+			fi.On("IsDir")
+		})(t).IsDir()
+	})
+}
+
 func TestFileInfo_Sys(t *testing.T) {
 	t.Parallel()
 
@@ -229,6 +278,15 @@ func TestFileInfo_Sys(t *testing.T) {
 		mockFileInfo aferomock.FileInfoMocker
 		expected     interface{}
 	}{
+		{
+			scenario: "callback",
+			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+				fi.On("Sys").Return(func() interface{} {
+					return &struct{}{}
+				})
+			}),
+			expected: &struct{}{},
+		},
 		{
 			scenario: "header",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
@@ -248,4 +306,14 @@ func TestFileInfo_Sys(t *testing.T) {
 			assert.Equal(t, tc.expected, result)
 		})
 	}
+}
+
+func TestFileInfo_Sys_NoReturnValuePanic(t *testing.T) {
+	t.Parallel()
+
+	assert.Panics(t, func() {
+		aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
+			fi.On("Sys")
+		})(t).Sys()
+	})
 }

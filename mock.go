@@ -1,8 +1,13 @@
 package aferomock
 
 import (
+	"io/fs"
 	"testing"
+
+	"github.com/spf13/afero"
 )
+
+var _ afero.Fs = (*Fs)(nil)
 
 // FsMocker is Fs mocker.
 type FsMocker func(tb testing.TB) *Fs
@@ -32,6 +37,8 @@ func MockFs(mocks ...func(fs *Fs)) FsMocker {
 	}
 }
 
+var _ afero.File = (*File)(nil)
+
 // FileMocker is File mocker.
 type FileMocker func(tb testing.TB) *File
 
@@ -52,6 +59,8 @@ func MockFile(mocks ...func(f *File)) FileMocker {
 		return f
 	}
 }
+
+var _ fs.FileInfo = (*FileInfo)(nil)
 
 // FileInfoMocker is FileInfo mocker.
 type FileInfoMocker func(tb testing.TB) *FileInfo

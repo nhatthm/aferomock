@@ -92,7 +92,7 @@ func (fs *WrappedFs) Stat(name string) (fs.FileInfo, error) {
 }
 
 // WrapFs wraps a afero.Fs with custom implementations.
-func WrapFs(fs afero.Fs, wrappedFs WrappedFs) *WrappedFs { //nolint: cyclop
+func WrapFs(fs afero.Fs, wrappedFs WrappedFs) *WrappedFs { //nolint: cyclop,dupl
 	if wrappedFs.ChmodFunc == nil {
 		wrappedFs.ChmodFunc = fs.Chmod
 	}
