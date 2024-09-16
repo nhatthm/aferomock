@@ -12,7 +12,7 @@ import (
 	"go.nhat.io/aferomock"
 )
 
-func TestWrappedFs_Create(t *testing.T) {
+func TestFsCallbacks_Create(t *testing.T) {
 	t.Parallel()
 
 	f := aferomock.NopFile(t)
@@ -20,7 +20,7 @@ func TestWrappedFs_Create(t *testing.T) {
 	testCases := []struct {
 		scenario       string
 		mockFs         aferomock.FsMocker
-		wrappedFs      aferomock.WrappedFs
+		fsCallbacks    aferomock.FsCallbacks
 		expectedResult afero.File
 		expectedError  string
 	}{
@@ -43,7 +43,7 @@ func TestWrappedFs_Create(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				CreateFunc: func(string) (afero.File, error) {
 					return nil, errors.New("create error")
 				},
@@ -53,7 +53,7 @@ func TestWrappedFs_Create(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				CreateFunc: func(string) (afero.File, error) {
 					return f, nil
 				},
@@ -67,7 +67,7 @@ func TestWrappedFs_Create(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			result, err := fs.Create("test.txt")
 
 			assert.Equal(t, tc.expectedResult, result)
@@ -81,13 +81,13 @@ func TestWrappedFs_Create(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Mkdir(t *testing.T) {
+func TestFsCallbacks_Mkdir(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
 		scenario      string
 		mockFs        aferomock.FsMocker
-		wrappedFs     aferomock.WrappedFs
+		fsCallbacks   aferomock.FsCallbacks
 		expectedError string
 	}{
 		{
@@ -108,7 +108,7 @@ func TestWrappedFs_Mkdir(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				MkdirFunc: func(string, os.FileMode) error {
 					return errors.New("mkdir error")
 				},
@@ -118,7 +118,7 @@ func TestWrappedFs_Mkdir(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				MkdirFunc: func(string, os.FileMode) error {
 					return nil
 				},
@@ -131,7 +131,7 @@ func TestWrappedFs_Mkdir(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			err := fs.Mkdir("test", os.ModePerm)
 
 			if tc.expectedError == "" {
@@ -143,13 +143,13 @@ func TestWrappedFs_Mkdir(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_MkdirAll(t *testing.T) {
+func TestFsCallbacks_MkdirAll(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
 		scenario      string
 		mockFs        aferomock.FsMocker
-		wrappedFs     aferomock.WrappedFs
+		fsCallbacks   aferomock.FsCallbacks
 		expectedError string
 	}{
 		{
@@ -170,7 +170,7 @@ func TestWrappedFs_MkdirAll(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				MkdirAllFunc: func(string, os.FileMode) error {
 					return errors.New("mkdir all error")
 				},
@@ -180,7 +180,7 @@ func TestWrappedFs_MkdirAll(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				MkdirAllFunc: func(string, os.FileMode) error {
 					return nil
 				},
@@ -193,7 +193,7 @@ func TestWrappedFs_MkdirAll(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			err := fs.MkdirAll("path/test", os.ModePerm)
 
 			if tc.expectedError == "" {
@@ -205,7 +205,7 @@ func TestWrappedFs_MkdirAll(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Open(t *testing.T) {
+func TestFsCallbacks_Open(t *testing.T) {
 	t.Parallel()
 
 	f := aferomock.NopFile(t)
@@ -213,7 +213,7 @@ func TestWrappedFs_Open(t *testing.T) {
 	testCases := []struct {
 		scenario       string
 		mockFs         aferomock.FsMocker
-		wrappedFs      aferomock.WrappedFs
+		fsCallbacks    aferomock.FsCallbacks
 		expectedResult afero.File
 		expectedError  string
 	}{
@@ -236,7 +236,7 @@ func TestWrappedFs_Open(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				OpenFunc: func(string) (afero.File, error) {
 					return nil, errors.New("create error")
 				},
@@ -246,7 +246,7 @@ func TestWrappedFs_Open(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				OpenFunc: func(string) (afero.File, error) {
 					return f, nil
 				},
@@ -260,7 +260,7 @@ func TestWrappedFs_Open(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			result, err := fs.Open("test.txt")
 
 			assert.Equal(t, tc.expectedResult, result)
@@ -274,7 +274,7 @@ func TestWrappedFs_Open(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_OpenFile(t *testing.T) {
+func TestFsCallbacks_OpenFile(t *testing.T) {
 	t.Parallel()
 
 	f := aferomock.NopFile(t)
@@ -282,7 +282,7 @@ func TestWrappedFs_OpenFile(t *testing.T) {
 	testCases := []struct {
 		scenario       string
 		mockFs         aferomock.FsMocker
-		wrappedFs      aferomock.WrappedFs
+		fsCallbacks    aferomock.FsCallbacks
 		expectedResult afero.File
 		expectedError  string
 	}{
@@ -305,7 +305,7 @@ func TestWrappedFs_OpenFile(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				OpenFileFunc: func(string, int, os.FileMode) (afero.File, error) {
 					return nil, errors.New("open file error")
 				},
@@ -315,7 +315,7 @@ func TestWrappedFs_OpenFile(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				OpenFileFunc: func(string, int, os.FileMode) (afero.File, error) {
 					return f, nil
 				},
@@ -329,7 +329,7 @@ func TestWrappedFs_OpenFile(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			result, err := fs.OpenFile("test.txt", 0, os.ModePerm)
 
 			assert.Equal(t, tc.expectedResult, result)
@@ -343,13 +343,13 @@ func TestWrappedFs_OpenFile(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Remove(t *testing.T) {
+func TestFsCallbacks_Remove(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
 		scenario      string
 		mockFs        aferomock.FsMocker
-		wrappedFs     aferomock.WrappedFs
+		fsCallbacks   aferomock.FsCallbacks
 		expectedError string
 	}{
 		{
@@ -370,7 +370,7 @@ func TestWrappedFs_Remove(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				RemoveFunc: func(string) error {
 					return errors.New("remove error")
 				},
@@ -380,7 +380,7 @@ func TestWrappedFs_Remove(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				RemoveFunc: func(string) error {
 					return nil
 				},
@@ -393,7 +393,7 @@ func TestWrappedFs_Remove(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			err := fs.Remove("test.txt")
 
 			if tc.expectedError == "" {
@@ -405,13 +405,13 @@ func TestWrappedFs_Remove(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_RemoveAll(t *testing.T) {
+func TestFsCallbacks_RemoveAll(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
 		scenario      string
 		mockFs        aferomock.FsMocker
-		wrappedFs     aferomock.WrappedFs
+		fsCallbacks   aferomock.FsCallbacks
 		expectedError string
 	}{
 		{
@@ -432,7 +432,7 @@ func TestWrappedFs_RemoveAll(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				RemoveAllFunc: func(string) error {
 					return errors.New("remove all error")
 				},
@@ -442,7 +442,7 @@ func TestWrappedFs_RemoveAll(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				RemoveAllFunc: func(string) error {
 					return nil
 				},
@@ -455,7 +455,7 @@ func TestWrappedFs_RemoveAll(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			err := fs.RemoveAll("path/test")
 
 			if tc.expectedError == "" {
@@ -467,13 +467,13 @@ func TestWrappedFs_RemoveAll(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Rename(t *testing.T) {
+func TestFsCallbacks_Rename(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
 		scenario      string
 		mockFs        aferomock.FsMocker
-		wrappedFs     aferomock.WrappedFs
+		fsCallbacks   aferomock.FsCallbacks
 		expectedError string
 	}{
 		{
@@ -494,7 +494,7 @@ func TestWrappedFs_Rename(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				RenameFunc: func(string, string) error {
 					return errors.New("rename error")
 				},
@@ -504,7 +504,7 @@ func TestWrappedFs_Rename(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				RenameFunc: func(string, string) error {
 					return nil
 				},
@@ -517,7 +517,7 @@ func TestWrappedFs_Rename(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			err := fs.Rename("oldname", "newname")
 
 			if tc.expectedError == "" {
@@ -529,7 +529,7 @@ func TestWrappedFs_Rename(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Stat(t *testing.T) {
+func TestFsCallbacks_Stat(t *testing.T) {
 	t.Parallel()
 
 	fi := aferomock.NopFileInfo(t)
@@ -537,7 +537,7 @@ func TestWrappedFs_Stat(t *testing.T) {
 	testCases := []struct {
 		scenario       string
 		mockFs         aferomock.FsMocker
-		wrappedFs      aferomock.WrappedFs
+		fsCallbacks    aferomock.FsCallbacks
 		expectedResult os.FileInfo
 		expectedError  string
 	}{
@@ -560,7 +560,7 @@ func TestWrappedFs_Stat(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				StatFunc: func(string) (os.FileInfo, error) {
 					return nil, errors.New("stat error")
 				},
@@ -570,7 +570,7 @@ func TestWrappedFs_Stat(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				StatFunc: func(string) (os.FileInfo, error) {
 					return fi, nil
 				},
@@ -584,7 +584,7 @@ func TestWrappedFs_Stat(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			result, err := fs.Stat("test.txt")
 
 			assert.Equal(t, tc.expectedResult, result)
@@ -598,12 +598,12 @@ func TestWrappedFs_Stat(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Name(t *testing.T) {
+func TestFsCallbacks_Name(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
 		scenario       string
-		wrappedFs      aferomock.WrappedFs
+		fsCallbacks    aferomock.FsCallbacks
 		expectedResult string
 	}{
 		{
@@ -612,7 +612,7 @@ func TestWrappedFs_Name(t *testing.T) {
 		},
 		{
 			scenario: "wrapped",
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				NameFunc: func() string {
 					return "wrapped"
 				},
@@ -625,7 +625,7 @@ func TestWrappedFs_Name(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(aferomock.NopFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(aferomock.NopFs(t), tc.fsCallbacks)
 
 			actual := fs.Name()
 
@@ -634,13 +634,13 @@ func TestWrappedFs_Name(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Chmod(t *testing.T) {
+func TestFsCallbacks_Chmod(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
 		scenario      string
 		mockFs        aferomock.FsMocker
-		wrappedFs     aferomock.WrappedFs
+		fsCallbacks   aferomock.FsCallbacks
 		expectedError string
 	}{
 		{
@@ -661,7 +661,7 @@ func TestWrappedFs_Chmod(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				ChmodFunc: func(string, os.FileMode) error {
 					return errors.New("chmod error")
 				},
@@ -671,7 +671,7 @@ func TestWrappedFs_Chmod(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				ChmodFunc: func(string, os.FileMode) error {
 					return nil
 				},
@@ -684,7 +684,7 @@ func TestWrappedFs_Chmod(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			err := fs.Chmod("test.txt", os.ModePerm)
 
 			if tc.expectedError == "" {
@@ -696,13 +696,13 @@ func TestWrappedFs_Chmod(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Chown(t *testing.T) {
+func TestFsCallbacks_Chown(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
 		scenario      string
 		mockFs        aferomock.FsMocker
-		wrappedFs     aferomock.WrappedFs
+		fsCallbacks   aferomock.FsCallbacks
 		expectedError string
 	}{
 		{
@@ -723,7 +723,7 @@ func TestWrappedFs_Chown(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				ChownFunc: func(string, int, int) error {
 					return errors.New("chown error")
 				},
@@ -733,7 +733,7 @@ func TestWrappedFs_Chown(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				ChownFunc: func(string, int, int) error {
 					return nil
 				},
@@ -746,7 +746,7 @@ func TestWrappedFs_Chown(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			err := fs.Chown("test.txt", 501, 501)
 
 			if tc.expectedError == "" {
@@ -758,7 +758,7 @@ func TestWrappedFs_Chown(t *testing.T) {
 	}
 }
 
-func TestWrappedFs_Chtimes(t *testing.T) {
+func TestFsCallbacks_Chtimes(t *testing.T) {
 	t.Parallel()
 
 	ts := time.Now()
@@ -766,7 +766,7 @@ func TestWrappedFs_Chtimes(t *testing.T) {
 	testCases := []struct {
 		scenario      string
 		mockFs        aferomock.FsMocker
-		wrappedFs     aferomock.WrappedFs
+		fsCallbacks   aferomock.FsCallbacks
 		expectedError string
 	}{
 		{
@@ -787,7 +787,7 @@ func TestWrappedFs_Chtimes(t *testing.T) {
 		{
 			scenario: "wrapped - error",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				ChtimesFunc: func(string, time.Time, time.Time) error {
 					return errors.New("chtimes error")
 				},
@@ -797,7 +797,7 @@ func TestWrappedFs_Chtimes(t *testing.T) {
 		{
 			scenario: "wrapped - success",
 			mockFs:   aferomock.NopFs,
-			wrappedFs: aferomock.WrappedFs{
+			fsCallbacks: aferomock.FsCallbacks{
 				ChtimesFunc: func(string, time.Time, time.Time) error {
 					return nil
 				},
@@ -810,7 +810,7 @@ func TestWrappedFs_Chtimes(t *testing.T) {
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
-			fs := aferomock.WrapFs(tc.mockFs(t), tc.wrappedFs)
+			fs := aferomock.OverrideFs(tc.mockFs(t), tc.fsCallbacks)
 			err := fs.Chtimes("test.txt", ts, ts)
 
 			if tc.expectedError == "" {
@@ -820,4 +820,13 @@ func TestWrappedFs_Chtimes(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestWrapFs(t *testing.T) {
+	t.Parallel()
+
+	fs := aferomock.WrapFs(aferomock.NopFs(t), aferomock.WrappedFs{})
+
+	assert.NotNil(t, fs)
+	assert.IsType(t, &aferomock.FsCallbacks{}, fs)
 }
