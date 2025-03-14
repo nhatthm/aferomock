@@ -3,8 +3,8 @@ MODULE_NAME=aferomock
 BIN_DIR = bin
 VENDOR_DIR = vendor
 
-GOLANGCI_LINT_VERSION ?= v1.61.0
-MOCKERY_VERSION ?= v2.45.0
+GOLANGCI_LINT_VERSION ?= v1.64.7
+MOCKERY_VERSION ?= v2.53.2
 
 GO ?= go
 GOLANGCI_LINT ?= $(shell go env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
@@ -20,15 +20,15 @@ generate: $(MOCKERY)
 	@$(MOCKERY)
 
 .PHONY: lint
-lint: $(GOLANGCI_LINT) $(VENDOR_DIR)
+lint: $(GOLANGCI_LINT)
 	@$(GOLANGCI_LINT) run -c .golangci.yaml
 
 .PHONY: update
-update: $(VENDOR_DIR)
+update:
 	@$(GO) get -u ./...
 
 .PHONY: tidy
-tidy: $(VENDOR_DIR)
+tidy:
 	@$(GO) mod tidy
 
 .PHONY: test

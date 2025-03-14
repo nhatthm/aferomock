@@ -22,21 +22,20 @@ linters:
   disable:
     - copyloopvar
     - depguard
-    - execinquery
     - exhaustruct
-    - exportloopref
     - forbidigo
     - forcetypeassert
     - gci
     - gochecknoglobals
-    - gomnd
     - intrange
     - ireturn
     - lll
+    - mnd
     - nonamedreturns
     - nolintlint # https://github.com/golangci/golangci-lint/issues/3063
     - paralleltest
     - tagliatelle
+    - tenv
     - testifylint
     - testpackage
     - varnamelen
@@ -51,7 +50,6 @@ issues:
         - err113
         - funlen
         - goconst
-        - goerr113
-        - gomnd
+        - mnd
         - noctx
       path: "_test.go"
