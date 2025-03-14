@@ -12,22 +12,16 @@ linters-settings:
     threshold: 100
   misspell:
     locale: US
-  unused:
-    check-exported: false
-  unparam:
-    check-exported: true
 
 linters:
   enable-all: true
   disable:
-    - copyloopvar
     - depguard
     - exhaustruct
     - forbidigo
     - forcetypeassert
     - gci
     - gochecknoglobals
-    - intrange
     - ireturn
     - lll
     - mnd
