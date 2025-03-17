@@ -63,7 +63,6 @@ func TestFsCallbacks_Create(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -127,7 +126,6 @@ func TestFsCallbacks_Mkdir(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -189,7 +187,6 @@ func TestFsCallbacks_MkdirAll(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -256,7 +253,6 @@ func TestFsCallbacks_Open(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -325,7 +321,6 @@ func TestFsCallbacks_OpenFile(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -389,7 +384,6 @@ func TestFsCallbacks_Remove(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -451,7 +445,6 @@ func TestFsCallbacks_RemoveAll(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -513,7 +506,6 @@ func TestFsCallbacks_Rename(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -580,7 +572,6 @@ func TestFsCallbacks_Stat(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -680,7 +671,6 @@ func TestFsCallbacks_Chmod(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -742,7 +732,6 @@ func TestFsCallbacks_Chown(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
@@ -806,7 +795,6 @@ func TestFsCallbacks_Chtimes(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		tc := tc
 		t.Run(tc.scenario, func(t *testing.T) {
 			t.Parallel()
 
