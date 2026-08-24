@@ -1,23 +1,31 @@
 version: "2"
 run:
   tests: true
+  allow-parallel-runners: true
 linters:
   default: all
   disable:
+    - copyloopvar
     - depguard
     - exhaustruct
+    - exhaustruct_v5
     - forbidigo
     - forcetypeassert
+    - funcorder
     - gochecknoglobals
+    - gomodguard
+    - intrange
     - ireturn
     - lll
     - mnd
+    - noinlineerr
     - nolintlint
     - nonamedreturns
     - paralleltest
     - tagliatelle
     - testifylint
     - testpackage
+    - usetesting
     - varnamelen
     - wrapcheck
     - wsl

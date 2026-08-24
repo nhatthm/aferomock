@@ -10,6 +10,7 @@ import (
 var _ afero.Fs = &FsCallbacks{}
 
 // WrappedFs is a type alias for FsCallbacks.
+//
 // Deprecated: Use FsCallbacks instead.
 type WrappedFs = FsCallbacks
 
@@ -96,6 +97,7 @@ func (fs FsCallbacks) Stat(name string) (fs.FileInfo, error) {
 }
 
 // WrapFs wraps a afero.Fs with custom callbacks.
+//
 // Deprecated: Use OverrideFs instead.
 func WrapFs(fs afero.Fs, callbacks WrappedFs) FsCallbacks {
 	return OverrideFs(fs, callbacks)

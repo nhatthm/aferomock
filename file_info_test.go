@@ -271,12 +271,12 @@ func TestFileInfo_Sys(t *testing.T) {
 	testCases := []struct {
 		scenario     string
 		mockFileInfo aferomock.FileInfoMocker
-		expected     interface{}
+		expected     any
 	}{
 		{
 			scenario: "callback",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("Sys").Return(func() interface{} {
+				fi.On("Sys").Return(func() any {
 					return &struct{}{}
 				})
 			}),

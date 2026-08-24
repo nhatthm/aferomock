@@ -14,7 +14,7 @@ type FileInfoCallbacks struct {
 	ModeFunc    func() fs.FileMode
 	ModTimeFunc func() time.Time
 	IsDirFunc   func() bool
-	SysFunc     func() interface{}
+	SysFunc     func() any
 }
 
 // Name satisfies the fs.FileInfo interface.
@@ -43,7 +43,7 @@ func (f FileInfoCallbacks) IsDir() bool {
 }
 
 // Sys satisfies the fs.FileInfo interface.
-func (f FileInfoCallbacks) Sys() interface{} {
+func (f FileInfoCallbacks) Sys() any {
 	return f.SysFunc()
 }
 
