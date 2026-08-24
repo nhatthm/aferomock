@@ -13,6 +13,7 @@ var _ afero.Fs = (*Fs)(nil)
 type FsMocker func(tb testing.TB) *Fs
 
 // NoMockFs is no mock Fs.
+//
 // Deprecated: use NopFs instead.
 var NoMockFs = NopFs
 
@@ -66,6 +67,7 @@ var _ fs.FileInfo = (*FileInfo)(nil)
 type FileInfoMocker func(tb testing.TB) *FileInfo
 
 // NoMockFileInfo is no mock FileInfo.
+//
 // Deprecated: use NopFileInfo instead.
 var NoMockFileInfo = NopFileInfo
 

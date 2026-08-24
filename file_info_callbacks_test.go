@@ -235,7 +235,7 @@ func TestFileInfoCallbacks_Sys(t *testing.T) {
 		scenario          string
 		mockFileInfo      aferomock.FileInfoMocker
 		fileInfoCallbacks aferomock.FileInfoCallbacks
-		expectedResult    interface{}
+		expectedResult    any
 	}{
 		{
 			scenario: "upstream",
@@ -249,7 +249,7 @@ func TestFileInfoCallbacks_Sys(t *testing.T) {
 			scenario:     "overridden",
 			mockFileInfo: aferomock.NopFileInfo,
 			fileInfoCallbacks: aferomock.FileInfoCallbacks{
-				SysFunc: func() interface{} {
+				SysFunc: func() any {
 					return true
 				},
 			},
