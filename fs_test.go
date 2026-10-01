@@ -27,8 +27,8 @@ func TestFs_Create(t *testing.T) {
 		{
 			scenario: "callback error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Create", "test.txt").
-					Return(func(string) (afero.File, error) {
+				fs.EXPECT().Create("test.txt").
+					RunAndReturn(func(string) (afero.File, error) {
 						return nil, errors.New("callback error")
 					})
 			}),
@@ -37,37 +37,17 @@ func TestFs_Create(t *testing.T) {
 		{
 			scenario: "callback success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Create", "test.txt").
-					Return(func(string) (afero.File, error) {
+				fs.EXPECT().Create("test.txt").
+					RunAndReturn(func(string) (afero.File, error) {
 						return f, nil
 					})
 			}),
 			expectedResult: f,
 		},
 		{
-			scenario: "callback for only error",
-			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Create", "test.txt").
-					Return(nil, func(string) error {
-						return errors.New("callback error")
-					})
-			}),
-			expectedError: "callback error",
-		},
-		{
-			scenario: "callback for only result",
-			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Create", "test.txt").
-					Return(func(string) afero.File {
-						return f
-					}, nil)
-			}),
-			expectedResult: f,
-		},
-		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Create", "test.txt").
+				fs.EXPECT().Create("test.txt").
 					Return(nil, errors.New("create error"))
 			}),
 			expectedError: "create error",
@@ -75,7 +55,7 @@ func TestFs_Create(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Create", "test.txt").
+				fs.EXPECT().Create("test.txt").
 					Return(f, nil)
 			}),
 			expectedResult: f,
@@ -105,7 +85,7 @@ func TestFs_Create_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Create", mock.Anything)
+			fs.EXPECT().Create(mock.Anything)
 		})(t).Create("") //nolint: errcheck
 	})
 }
@@ -121,8 +101,8 @@ func TestFs_Mkdir(t *testing.T) {
 		{
 			scenario: "callback",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Mkdir", "test", os.ModePerm).
-					Return(func(string, os.FileMode) error {
+				fs.EXPECT().Mkdir("test", os.ModePerm).
+					RunAndReturn(func(string, os.FileMode) error {
 						return errors.New("callback error")
 					})
 			}),
@@ -131,7 +111,7 @@ func TestFs_Mkdir(t *testing.T) {
 		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Mkdir", "test", os.ModePerm).
+				fs.EXPECT().Mkdir("test", os.ModePerm).
 					Return(errors.New("mkdir error"))
 			}),
 			expectedError: "mkdir error",
@@ -139,7 +119,7 @@ func TestFs_Mkdir(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Mkdir", "test", os.ModePerm).
+				fs.EXPECT().Mkdir("test", os.ModePerm).
 					Return(nil)
 			}),
 		},
@@ -166,7 +146,7 @@ func TestFs_Mkdir_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Mkdir", mock.Anything, mock.Anything)
+			fs.EXPECT().Mkdir(mock.Anything, mock.Anything)
 		})(t).Mkdir("", 0) //nolint: errcheck
 	})
 }
@@ -182,8 +162,8 @@ func TestFs_MkdirAll(t *testing.T) {
 		{
 			scenario: "callback",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("MkdirAll", "path/test", os.ModePerm).
-					Return(func(string, os.FileMode) error {
+				fs.EXPECT().MkdirAll("path/test", os.ModePerm).
+					RunAndReturn(func(string, os.FileMode) error {
 						return errors.New("callback error")
 					})
 			}),
@@ -192,7 +172,7 @@ func TestFs_MkdirAll(t *testing.T) {
 		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("MkdirAll", "path/test", os.ModePerm).
+				fs.EXPECT().MkdirAll("path/test", os.ModePerm).
 					Return(errors.New("mkdir all error"))
 			}),
 			expectedError: "mkdir all error",
@@ -200,7 +180,7 @@ func TestFs_MkdirAll(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("MkdirAll", "path/test", os.ModePerm).
+				fs.EXPECT().MkdirAll("path/test", os.ModePerm).
 					Return(nil)
 			}),
 		},
@@ -227,7 +207,7 @@ func TestFs_MkdirAll_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("MkdirAll", mock.Anything, mock.Anything)
+			fs.EXPECT().MkdirAll(mock.Anything, mock.Anything)
 		})(t).MkdirAll("", 0) //nolint: errcheck
 	})
 }
@@ -246,8 +226,8 @@ func TestFs_Open(t *testing.T) {
 		{
 			scenario: "callback error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Open", "test.txt").
-					Return(func(string) (afero.File, error) {
+				fs.EXPECT().Open("test.txt").
+					RunAndReturn(func(string) (afero.File, error) {
 						return nil, errors.New("callback error")
 					})
 			}),
@@ -256,37 +236,17 @@ func TestFs_Open(t *testing.T) {
 		{
 			scenario: "callback success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Open", "test.txt").
-					Return(func(string) (afero.File, error) {
+				fs.EXPECT().Open("test.txt").
+					RunAndReturn(func(string) (afero.File, error) {
 						return f, nil
 					})
 			}),
 			expectedResult: f,
 		},
 		{
-			scenario: "callback for only error",
-			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Open", "test.txt").
-					Return(nil, func(string) error {
-						return errors.New("callback error")
-					})
-			}),
-			expectedError: "callback error",
-		},
-		{
-			scenario: "callback for only result",
-			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Open", "test.txt").
-					Return(func(string) afero.File {
-						return f
-					}, nil)
-			}),
-			expectedResult: f,
-		},
-		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Open", "test.txt").
+				fs.EXPECT().Open("test.txt").
 					Return(nil, errors.New("create error"))
 			}),
 			expectedError: "create error",
@@ -294,7 +254,7 @@ func TestFs_Open(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Open", "test.txt").
+				fs.EXPECT().Open("test.txt").
 					Return(f, nil)
 			}),
 			expectedResult: f,
@@ -324,7 +284,7 @@ func TestFs_Open_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Open", mock.Anything)
+			fs.EXPECT().Open(mock.Anything)
 		})(t).Open("") //nolint: errcheck
 	})
 }
@@ -343,8 +303,8 @@ func TestFs_OpenFile(t *testing.T) {
 		{
 			scenario: "callback error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
-					Return(func(string, int, os.FileMode) (afero.File, error) {
+				fs.EXPECT().OpenFile("test.txt", 0, os.ModePerm).
+					RunAndReturn(func(string, int, os.FileMode) (afero.File, error) {
 						return nil, errors.New("callback error")
 					})
 			}),
@@ -353,37 +313,17 @@ func TestFs_OpenFile(t *testing.T) {
 		{
 			scenario: "callback success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
-					Return(func(string, int, os.FileMode) (afero.File, error) {
+				fs.EXPECT().OpenFile("test.txt", 0, os.ModePerm).
+					RunAndReturn(func(string, int, os.FileMode) (afero.File, error) {
 						return f, nil
 					})
 			}),
 			expectedResult: f,
 		},
 		{
-			scenario: "callback for only error",
-			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
-					Return(nil, func(string, int, os.FileMode) error {
-						return errors.New("callback error")
-					})
-			}),
-			expectedError: "callback error",
-		},
-		{
-			scenario: "callback for only result",
-			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
-					Return(func(string, int, os.FileMode) afero.File {
-						return f
-					}, nil)
-			}),
-			expectedResult: f,
-		},
-		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
+				fs.EXPECT().OpenFile("test.txt", 0, os.ModePerm).
 					Return(nil, errors.New("open file error"))
 			}),
 			expectedError: "open file error",
@@ -391,7 +331,7 @@ func TestFs_OpenFile(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
+				fs.EXPECT().OpenFile("test.txt", 0, os.ModePerm).
 					Return(f, nil)
 			}),
 			expectedResult: f,
@@ -421,7 +361,7 @@ func TestFs_OpenFile_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("OpenFile", mock.Anything, mock.Anything, mock.Anything)
+			fs.EXPECT().OpenFile(mock.Anything, mock.Anything, mock.Anything)
 		})(t).OpenFile("", 0, 0) //nolint: errcheck
 	})
 }
@@ -437,8 +377,8 @@ func TestFs_Remove(t *testing.T) {
 		{
 			scenario: "callback",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Remove", "test.txt").
-					Return(func(string) error {
+				fs.EXPECT().Remove("test.txt").
+					RunAndReturn(func(string) error {
 						return errors.New("callback error")
 					})
 			}),
@@ -447,7 +387,7 @@ func TestFs_Remove(t *testing.T) {
 		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Remove", "test.txt").
+				fs.EXPECT().Remove("test.txt").
 					Return(errors.New("remove error"))
 			}),
 			expectedError: "remove error",
@@ -455,7 +395,7 @@ func TestFs_Remove(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Remove", "test.txt").
+				fs.EXPECT().Remove("test.txt").
 					Return(nil)
 			}),
 		},
@@ -482,7 +422,7 @@ func TestFs_Remove_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Remove", mock.Anything)
+			fs.EXPECT().Remove(mock.Anything)
 		})(t).Remove("") //nolint: errcheck
 	})
 }
@@ -498,8 +438,8 @@ func TestFs_RemoveAll(t *testing.T) {
 		{
 			scenario: "callback",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("RemoveAll", "path/test").
-					Return(func(string) error {
+				fs.EXPECT().RemoveAll("path/test").
+					RunAndReturn(func(string) error {
 						return errors.New("callback error")
 					})
 			}),
@@ -508,7 +448,7 @@ func TestFs_RemoveAll(t *testing.T) {
 		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("RemoveAll", "path/test").
+				fs.EXPECT().RemoveAll("path/test").
 					Return(errors.New("remove all error"))
 			}),
 			expectedError: "remove all error",
@@ -516,7 +456,7 @@ func TestFs_RemoveAll(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("RemoveAll", "path/test").
+				fs.EXPECT().RemoveAll("path/test").
 					Return(nil)
 			}),
 		},
@@ -543,7 +483,7 @@ func TestFs_RemoveAll_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("RemoveAll", mock.Anything)
+			fs.EXPECT().RemoveAll(mock.Anything)
 		})(t).RemoveAll("") //nolint: errcheck
 	})
 }
@@ -559,8 +499,8 @@ func TestFs_Rename(t *testing.T) {
 		{
 			scenario: "callback",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Rename", "oldname", "newname").
-					Return(func(string, string) error {
+				fs.EXPECT().Rename("oldname", "newname").
+					RunAndReturn(func(string, string) error {
 						return errors.New("callback error")
 					})
 			}),
@@ -569,7 +509,7 @@ func TestFs_Rename(t *testing.T) {
 		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Rename", "oldname", "newname").
+				fs.EXPECT().Rename("oldname", "newname").
 					Return(errors.New("rename error"))
 			}),
 			expectedError: "rename error",
@@ -577,7 +517,7 @@ func TestFs_Rename(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Rename", "oldname", "newname").
+				fs.EXPECT().Rename("oldname", "newname").
 					Return(nil)
 			}),
 		},
@@ -604,7 +544,7 @@ func TestFs_Rename_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Rename", mock.Anything, mock.Anything)
+			fs.EXPECT().Rename(mock.Anything, mock.Anything)
 		})(t).Rename("", "") //nolint: errcheck
 	})
 }
@@ -623,8 +563,8 @@ func TestFs_Stat(t *testing.T) {
 		{
 			scenario: "callback error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Stat", "test.txt").
-					Return(func(string) (os.FileInfo, error) {
+				fs.EXPECT().Stat("test.txt").
+					RunAndReturn(func(string) (os.FileInfo, error) {
 						return nil, errors.New("callback error")
 					})
 			}),
@@ -633,37 +573,17 @@ func TestFs_Stat(t *testing.T) {
 		{
 			scenario: "callback success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Stat", "test.txt").
-					Return(func(string) (os.FileInfo, error) {
+				fs.EXPECT().Stat("test.txt").
+					RunAndReturn(func(string) (os.FileInfo, error) {
 						return fi, nil
 					})
 			}),
 			expectedResult: fi,
 		},
 		{
-			scenario: "callback for only error",
-			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Stat", "test.txt").
-					Return(nil, func(string) error {
-						return errors.New("callback error")
-					})
-			}),
-			expectedError: "callback error",
-		},
-		{
-			scenario: "callback for only result",
-			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Stat", "test.txt").
-					Return(func(string) os.FileInfo {
-						return fi
-					}, nil)
-			}),
-			expectedResult: fi,
-		},
-		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Stat", "test.txt").
+				fs.EXPECT().Stat("test.txt").
 					Return(nil, errors.New("stat error"))
 			}),
 			expectedError: "stat error",
@@ -671,7 +591,7 @@ func TestFs_Stat(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Stat", "test.txt").
+				fs.EXPECT().Stat("test.txt").
 					Return(fi, nil)
 			}),
 			expectedResult: fi,
@@ -701,7 +621,7 @@ func TestFs_Stat_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Stat", mock.Anything)
+			fs.EXPECT().Stat(mock.Anything)
 		})(t).Stat("") //nolint: errcheck
 	})
 }
@@ -748,8 +668,8 @@ func TestFs_Chmod(t *testing.T) {
 		{
 			scenario: "callback",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chmod", "test.txt", os.ModePerm).
-					Return(func(string, os.FileMode) error {
+				fs.EXPECT().Chmod("test.txt", os.ModePerm).
+					RunAndReturn(func(string, os.FileMode) error {
 						return errors.New("callback error")
 					})
 			}),
@@ -758,7 +678,7 @@ func TestFs_Chmod(t *testing.T) {
 		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chmod", "test.txt", os.ModePerm).
+				fs.EXPECT().Chmod("test.txt", os.ModePerm).
 					Return(errors.New("chmod error"))
 			}),
 			expectedError: "chmod error",
@@ -766,7 +686,7 @@ func TestFs_Chmod(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chmod", "test.txt", os.ModePerm).
+				fs.EXPECT().Chmod("test.txt", os.ModePerm).
 					Return(nil)
 			}),
 		},
@@ -793,7 +713,7 @@ func TestFs_Chmod_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Chmod", mock.Anything, mock.Anything)
+			fs.EXPECT().Chmod(mock.Anything, mock.Anything)
 		})(t).Chmod("", 0) //nolint: errcheck
 	})
 }
@@ -809,8 +729,8 @@ func TestFs_Chown(t *testing.T) {
 		{
 			scenario: "callback",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chown", "test.txt", 501, 501).
-					Return(func(string, int, int) error {
+				fs.EXPECT().Chown("test.txt", 501, 501).
+					RunAndReturn(func(string, int, int) error {
 						return errors.New("callback error")
 					})
 			}),
@@ -819,7 +739,7 @@ func TestFs_Chown(t *testing.T) {
 		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chown", "test.txt", 501, 501).
+				fs.EXPECT().Chown("test.txt", 501, 501).
 					Return(errors.New("chown error"))
 			}),
 			expectedError: "chown error",
@@ -827,7 +747,7 @@ func TestFs_Chown(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chown", "test.txt", 501, 501).
+				fs.EXPECT().Chown("test.txt", 501, 501).
 					Return(nil)
 			}),
 		},
@@ -854,7 +774,7 @@ func TestFs_Chown_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Chown", mock.Anything, mock.Anything, mock.Anything)
+			fs.EXPECT().Chown(mock.Anything, mock.Anything, mock.Anything)
 		})(t).Chown("", 0, 0) //nolint: errcheck
 	})
 }
@@ -872,8 +792,8 @@ func TestFs_Chtimes(t *testing.T) {
 		{
 			scenario: "callback",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chtimes", "test.txt", ts, ts).
-					Return(func(string, time.Time, time.Time) error {
+				fs.EXPECT().Chtimes("test.txt", ts, ts).
+					RunAndReturn(func(string, time.Time, time.Time) error {
 						return errors.New("callback error")
 					})
 			}),
@@ -882,7 +802,7 @@ func TestFs_Chtimes(t *testing.T) {
 		{
 			scenario: "error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chtimes", "test.txt", ts, ts).
+				fs.EXPECT().Chtimes("test.txt", ts, ts).
 					Return(errors.New("chtimes error"))
 			}),
 			expectedError: "chtimes error",
@@ -890,7 +810,7 @@ func TestFs_Chtimes(t *testing.T) {
 		{
 			scenario: "success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chtimes", "test.txt", ts, ts).
+				fs.EXPECT().Chtimes("test.txt", ts, ts).
 					Return(nil)
 			}),
 		},
@@ -917,7 +837,7 @@ func TestFs_Chtimes_NoReturnValuePanic(t *testing.T) {
 
 	assert.Panics(t, func() {
 		aferomock.MockFs(func(fs *aferomock.Fs) { //nolint: gosec
-			fs.On("Chtimes", mock.Anything, mock.Anything, mock.Anything)
+			fs.EXPECT().Chtimes(mock.Anything, mock.Anything, mock.Anything)
 		})(t).Chtimes("", time.Time{}, time.Time{}) //nolint: errcheck
 	})
 }

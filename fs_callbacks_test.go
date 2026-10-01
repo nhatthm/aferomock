@@ -27,7 +27,7 @@ func TestFsCallbacks_Create(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Create", "test.txt").
+				fs.EXPECT().Create("test.txt").
 					Return(nil, errors.New("create error"))
 			}),
 			expectedError: "create error",
@@ -35,7 +35,7 @@ func TestFsCallbacks_Create(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Create", "test.txt").
+				fs.EXPECT().Create("test.txt").
 					Return(f, nil)
 			}),
 			expectedResult: f,
@@ -92,7 +92,7 @@ func TestFsCallbacks_Mkdir(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Mkdir", "test", os.ModePerm).
+				fs.EXPECT().Mkdir("test", os.ModePerm).
 					Return(errors.New("mkdir error"))
 			}),
 			expectedError: "mkdir error",
@@ -100,7 +100,7 @@ func TestFsCallbacks_Mkdir(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Mkdir", "test", os.ModePerm).
+				fs.EXPECT().Mkdir("test", os.ModePerm).
 					Return(nil)
 			}),
 		},
@@ -153,7 +153,7 @@ func TestFsCallbacks_MkdirAll(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("MkdirAll", "path/test", os.ModePerm).
+				fs.EXPECT().MkdirAll("path/test", os.ModePerm).
 					Return(errors.New("mkdir all error"))
 			}),
 			expectedError: "mkdir all error",
@@ -161,7 +161,7 @@ func TestFsCallbacks_MkdirAll(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("MkdirAll", "path/test", os.ModePerm).
+				fs.EXPECT().MkdirAll("path/test", os.ModePerm).
 					Return(nil)
 			}),
 		},
@@ -217,7 +217,7 @@ func TestFsCallbacks_Open(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Open", "test.txt").
+				fs.EXPECT().Open("test.txt").
 					Return(nil, errors.New("create error"))
 			}),
 			expectedError: "create error",
@@ -225,7 +225,7 @@ func TestFsCallbacks_Open(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Open", "test.txt").
+				fs.EXPECT().Open("test.txt").
 					Return(f, nil)
 			}),
 			expectedResult: f,
@@ -285,7 +285,7 @@ func TestFsCallbacks_OpenFile(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
+				fs.EXPECT().OpenFile("test.txt", 0, os.ModePerm).
 					Return(nil, errors.New("open file error"))
 			}),
 			expectedError: "open file error",
@@ -293,7 +293,7 @@ func TestFsCallbacks_OpenFile(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("OpenFile", "test.txt", 0, os.ModePerm).
+				fs.EXPECT().OpenFile("test.txt", 0, os.ModePerm).
 					Return(f, nil)
 			}),
 			expectedResult: f,
@@ -350,7 +350,7 @@ func TestFsCallbacks_Remove(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Remove", "test.txt").
+				fs.EXPECT().Remove("test.txt").
 					Return(errors.New("remove error"))
 			}),
 			expectedError: "remove error",
@@ -358,7 +358,7 @@ func TestFsCallbacks_Remove(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Remove", "test.txt").
+				fs.EXPECT().Remove("test.txt").
 					Return(nil)
 			}),
 		},
@@ -411,7 +411,7 @@ func TestFsCallbacks_RemoveAll(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("RemoveAll", "path/test").
+				fs.EXPECT().RemoveAll("path/test").
 					Return(errors.New("remove all error"))
 			}),
 			expectedError: "remove all error",
@@ -419,7 +419,7 @@ func TestFsCallbacks_RemoveAll(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("RemoveAll", "path/test").
+				fs.EXPECT().RemoveAll("path/test").
 					Return(nil)
 			}),
 		},
@@ -472,7 +472,7 @@ func TestFsCallbacks_Rename(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Rename", "oldname", "newname").
+				fs.EXPECT().Rename("oldname", "newname").
 					Return(errors.New("rename error"))
 			}),
 			expectedError: "rename error",
@@ -480,7 +480,7 @@ func TestFsCallbacks_Rename(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Rename", "oldname", "newname").
+				fs.EXPECT().Rename("oldname", "newname").
 					Return(nil)
 			}),
 		},
@@ -536,7 +536,7 @@ func TestFsCallbacks_Stat(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Stat", "test.txt").
+				fs.EXPECT().Stat("test.txt").
 					Return(nil, errors.New("stat error"))
 			}),
 			expectedError: "stat error",
@@ -544,7 +544,7 @@ func TestFsCallbacks_Stat(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Stat", "test.txt").
+				fs.EXPECT().Stat("test.txt").
 					Return(fi, nil)
 			}),
 			expectedResult: fi,
@@ -637,7 +637,7 @@ func TestFsCallbacks_Chmod(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chmod", "test.txt", os.ModePerm).
+				fs.EXPECT().Chmod("test.txt", os.ModePerm).
 					Return(errors.New("chmod error"))
 			}),
 			expectedError: "chmod error",
@@ -645,7 +645,7 @@ func TestFsCallbacks_Chmod(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chmod", "test.txt", os.ModePerm).
+				fs.EXPECT().Chmod("test.txt", os.ModePerm).
 					Return(nil)
 			}),
 		},
@@ -698,7 +698,7 @@ func TestFsCallbacks_Chown(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chown", "test.txt", 501, 501).
+				fs.EXPECT().Chown("test.txt", 501, 501).
 					Return(errors.New("chown error"))
 			}),
 			expectedError: "chown error",
@@ -706,7 +706,7 @@ func TestFsCallbacks_Chown(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chown", "test.txt", 501, 501).
+				fs.EXPECT().Chown("test.txt", 501, 501).
 					Return(nil)
 			}),
 		},
@@ -761,7 +761,7 @@ func TestFsCallbacks_Chtimes(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chtimes", "test.txt", ts, ts).
+				fs.EXPECT().Chtimes("test.txt", ts, ts).
 					Return(errors.New("chtimes error"))
 			}),
 			expectedError: "chtimes error",
@@ -769,7 +769,7 @@ func TestFsCallbacks_Chtimes(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFs: aferomock.MockFs(func(fs *aferomock.Fs) {
-				fs.On("Chtimes", "test.txt", ts, ts).
+				fs.EXPECT().Chtimes("test.txt", ts, ts).
 					Return(nil)
 			}),
 		},
