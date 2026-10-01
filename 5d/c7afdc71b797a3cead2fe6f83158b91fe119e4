@@ -1,0 +1,104 @@
+fs_test.go
+  s_f612aa03cb8d34::t_0a53ef06477565 796
+  s_f612aa03cb8d34::t_e8ed16e6ba6f3c 307
+  s_f612aa03cb8d34::t_8185f513ef4f55 41
+  s_f612aa03cb8d34::t_c6b0a61d92b590 105
+  s_f612aa03cb8d34::t_2f489e21364456 577
+  s_f612aa03cb8d34::t_79024fad283177 442
+  s_f612aa03cb8d34::t_4f00602c2e8fd2 166
+  s_f612aa03cb8d34::t_cf2c9838d08987 230
+  s_f612aa03cb8d34::t_dc6c2c4b57f12f 317
+  s_f612aa03cb8d34::t_9890ceb5670e82 381
+  s_f612aa03cb8d34::t_c89af1819a501e 31
+  s_f612aa03cb8d34::t_b37bbaca71027a 240
+  s_f612aa03cb8d34::t_732767eefb4d6d 567
+  s_f612aa03cb8d34::t_eac00850a8449b 733
+  s_f612aa03cb8d34::t_3249e94be6f7e8 503
+  s_f612aa03cb8d34::t_149bed9bf584ce 672
+  s_f612aa03cb8d34::t_8faf838b1f4e72 30
+  s_f612aa03cb8d34::t_fa1fa60881a07f 40
+  s_f612aa03cb8d34::t_aa92e42044d840 104
+  s_f612aa03cb8d34::t_20e79a1b174df4 165
+  s_f612aa03cb8d34::t_7c8b8415f38742 229
+  s_f612aa03cb8d34::t_e0912667c79f21 239
+  s_f612aa03cb8d34::t_fadda7d267a1a1 306
+  s_f612aa03cb8d34::t_ca0ff3c65a021a 316
+  s_f612aa03cb8d34::t_7416bb46fc0695 380
+  s_f612aa03cb8d34::t_ed0890d2f8914e 441
+  s_f612aa03cb8d34::t_607ca966e6e01f 502
+  s_f612aa03cb8d34::t_706fac405cff5b 566
+  s_f612aa03cb8d34::t_28269466e1abd6 576
+  s_f612aa03cb8d34::t_40bbbf77ce396d 671
+  s_f612aa03cb8d34::t_8f486dbf98f562 732
+  s_f612aa03cb8d34::t_5f4795a0572547 795
+file_info_test.go
+  s_f612aa03cb8d34::t_239798b516b900 226
+  s_f612aa03cb8d34::t_04b7661f1b1c3e 124
+  s_f612aa03cb8d34::t_0e9dc7a79cd2b0 173
+  s_f612aa03cb8d34::t_4c5720fc93e104 77
+.mockery.yaml
+  h_1bffb29edaf571 5
+Makefile
+  s_f612aa03cb8d34::t_acc9b033bf78f9 65-67
+  s_f612aa03cb8d34::t_ed751fb8cdf9b5 61
+  s_f612aa03cb8d34::t_a31b03c0cda798 60
+  s_f612aa03cb8d34::t_11561d7dc23d32 62-64
+file_callbacks_test.go
+  h_1bffb29edaf571 26,34,82,89,139,147,199,207,261,269,321,329,381,389,443,451,502,510,558,566,615,623,675,683,735,743
+fs_callbacks_test.go
+  h_1bffb29edaf571 30,38,95,103,156,164,220,228,288,296,353,361,414,422,475,483,539,547,640,648,701,709,764,772
+mock.go
+  s_e17001307299a6::t_4fa65285a686a5 3
+  s_e17001307299a6::t_ccc44e18334648 4
+  s_e17001307299a6::t_8355fea2d0605a 5
+file_test.go
+  h_1bffb29edaf571 26,36,44,66,82,92,99,122,139,149,159,167,191,208,218,228,236,260,279,289,299,307,331,348,358,368,376,400,417,427,437,445,469,488,498,508,516,540,556,566,574,596,612,622,631,639,661,678,688,698,706,730,747,757,767,775,799,816,826,836,844,868
+  s_f612aa03cb8d34::t_0ebb64f4161686 150
+  s_f612aa03cb8d34::t_f72124e52d907e 209
+  s_f612aa03cb8d34::t_6cee3a313b483c 817,827
+  s_f612aa03cb8d34::t_a23a1075843f19 613,623
+  s_f612aa03cb8d34::t_bc2a798cf5c3d6 557
+  s_f612aa03cb8d34::t_32809102b730d5 83
+  s_f612aa03cb8d34::t_1709dc93e578d9 349,359
+  s_f612aa03cb8d34::t_4a7a1056daea79 27
+  s_f612aa03cb8d34::t_7e2f9ecad78c2a 280
+  s_f612aa03cb8d34::t_d075bf5f4cb6e9 748,758
+  s_f612aa03cb8d34::t_bf44d68ed597ae 219
+  s_f612aa03cb8d34::t_efdb69c4028664 290
+  s_f612aa03cb8d34::t_933f3b80562f4d 489,499
+  s_f612aa03cb8d34::t_3d4a0ffe324616 689
+  s_f612aa03cb8d34::t_c228b8029a8b53 418,428
+  s_f612aa03cb8d34::t_c3f5ebfc8a57a4 679
+  s_f612aa03cb8d34::t_6be531d8c30b00 140
+file_info_callbacks_test.go
+  h_1bffb29edaf571 25,32,81,121,163,203,243
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "5dc7afdc71b797a3cead2fe6f83158b91fe119e4",
+  "prompts": {},
+  "humans": {
+    "h_1bffb29edaf571": {
+      "author": "Nhat <contact@nhat.me>"
+    }
+  },
+  "sessions": {
+    "s_e17001307299a6": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1790849254674",
+        "model": "unknown"
+      },
+      "human_author": "Nhat <contact@nhat.me>"
+    },
+    "s_f612aa03cb8d34": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1790844845885",
+        "model": "unknown"
+      },
+      "human_author": "Nhat <contact@nhat.me>"
+    }
+  }
+}
