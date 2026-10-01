@@ -22,14 +22,14 @@ func TestFileInfoCallbacks_Name(t *testing.T) {
 		{
 			scenario: "upstream - no name",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("Name").
+				fi.EXPECT().Name().
 					Return("")
 			}),
 		},
 		{
 			scenario: "upstream - has name",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("Name").
+				fi.EXPECT().Name().
 					Return("name")
 			}),
 			expectedResult: "name",
@@ -78,7 +78,7 @@ func TestFileInfoCallbacks_Size(t *testing.T) {
 		{
 			scenario: "upstream",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("Size").
+				fi.EXPECT().Size().
 					Return(int64(10))
 			}),
 			expectedResult: 10,
@@ -118,7 +118,7 @@ func TestFileInfoCallbacks_Mode(t *testing.T) {
 		{
 			scenario: "upstream",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("Mode").
+				fi.EXPECT().Mode().
 					Return(os.FileMode(10))
 			}),
 			expectedResult: 10,
@@ -160,7 +160,7 @@ func TestFileInfoCallbacks_ModTime(t *testing.T) {
 		{
 			scenario: "upstream",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("ModTime").
+				fi.EXPECT().ModTime().
 					Return(ts)
 			}),
 			expectedResult: ts,
@@ -200,7 +200,7 @@ func TestFileInfoCallbacks_IsDir(t *testing.T) {
 		{
 			scenario: "upstream",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("IsDir").
+				fi.EXPECT().IsDir().
 					Return(true)
 			}),
 			expectedResult: true,
@@ -240,7 +240,7 @@ func TestFileInfoCallbacks_Sys(t *testing.T) {
 		{
 			scenario: "upstream",
 			mockFileInfo: aferomock.MockFileInfo(func(fi *aferomock.FileInfo) {
-				fi.On("Sys").
+				fi.EXPECT().Sys().
 					Return(64)
 			}),
 			expectedResult: 64,

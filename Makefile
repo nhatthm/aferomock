@@ -1,7 +1,7 @@
 MODULE_NAME=aferomock
 
-GOLANGCI_LINT_VERSION ?= v2.13.0
-MOCKERY_VERSION ?= v3.7.4
+GOLANGCI_LINT_VERSION ?= v2.14.0
+MOCKERY_VERSION ?= v3.8.0
 
 GO ?= go
 GOLANGCI_LINT ?= $(shell go env GOPATH)/bin/golangci-lint-$(GOLANGCI_LINT_VERSION)
@@ -28,11 +28,6 @@ endif
 $(VENDOR_DIR):
 	$(Q)mkdir -p $(VENDOR_DIR)
 	$(Q)$(GO) mod vendor
-
-.PHONY: generate
-generate: $(MOCKERY)
-	@printf -- "$(OK_COLOR)==> generate mocks$(NO_COLOR)\n"
-	$(Q)GOROOT=$(GOROOT_DIR) PATH="$(GOROOT_DIR)/bin:$$PATH" $(MOCKERY)
 
 .PHONY: lint
 ifeq ($(V),1)
@@ -61,6 +56,14 @@ test: test-unit
 test-unit:
 	@printf -- "$(OK_COLOR)==> unit test$(NO_COLOR)\n"
 	$(Q)$(GO) test -gcflags=-l -coverprofile=unit.coverprofile -covermode=atomic -race ./...
+
+.PHONY: gen
+gen: gen-mocks
+
+.PHONY: gen-mocks
+gen-mocks: $(MOCKERY)
+	@printf -- "$(OK_COLOR)==> generate mocks$(NO_COLOR)\n"
+	$(Q)GOROOT=$(GOROOT_DIR) PATH="$(GOROOT_DIR)/bin:$$PATH" $(MOCKERY)
 
 .PHONY: $(GITHUB_OUTPUT)
 $(GITHUB_OUTPUT):

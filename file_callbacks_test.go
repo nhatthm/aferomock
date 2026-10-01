@@ -23,7 +23,7 @@ func TestFileCallbacks_Close(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Close").
+				f.EXPECT().Close().
 					Return(errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -31,7 +31,7 @@ func TestFileCallbacks_Close(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Close").
+				f.EXPECT().Close().
 					Return(nil)
 			}),
 		},
@@ -79,14 +79,14 @@ func TestFileCallbacks_Name(t *testing.T) {
 		{
 			scenario: "upstream - no name",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Name").
+				f.EXPECT().Name().
 					Return("")
 			}),
 		},
 		{
 			scenario: "upstream - has name",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Name").
+				f.EXPECT().Name().
 					Return("name")
 			}),
 			expectedResult: "name",
@@ -136,7 +136,7 @@ func TestFileCallbacks_Read(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Read", []byte("hello")).
+				f.EXPECT().Read([]byte("hello")).
 					Return(0, errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -144,7 +144,7 @@ func TestFileCallbacks_Read(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Read", []byte("hello")).
+				f.EXPECT().Read([]byte("hello")).
 					Return(5, nil)
 			}),
 			expectedResult: 5,
@@ -196,7 +196,7 @@ func TestFileCallbacks_ReadAt(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("ReadAt", []byte("hello"), int64(1)).
+				f.EXPECT().ReadAt([]byte("hello"), int64(1)).
 					Return(0, errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -204,7 +204,7 @@ func TestFileCallbacks_ReadAt(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("ReadAt", []byte("hello"), int64(1)).
+				f.EXPECT().ReadAt([]byte("hello"), int64(1)).
 					Return(4, nil)
 			}),
 			expectedResult: 4,
@@ -258,7 +258,7 @@ func TestFileCallbacks_Readdir(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Readdir", 1).
+				f.EXPECT().Readdir(1).
 					Return(nil, errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -266,7 +266,7 @@ func TestFileCallbacks_Readdir(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Readdir", 1).
+				f.EXPECT().Readdir(1).
 					Return([]fs.FileInfo{fi}, nil)
 			}),
 			expectedResult: []fs.FileInfo{fi},
@@ -318,7 +318,7 @@ func TestFileCallbacks_Readdirnames(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Readdirnames", 1).
+				f.EXPECT().Readdirnames(1).
 					Return(nil, errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -326,7 +326,7 @@ func TestFileCallbacks_Readdirnames(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Readdirnames", 1).
+				f.EXPECT().Readdirnames(1).
 					Return([]string{"foobar"}, nil)
 			}),
 			expectedResult: []string{"foobar"},
@@ -378,7 +378,7 @@ func TestFileCallbacks_Seek(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Seek", int64(64), 10).
+				f.EXPECT().Seek(int64(64), 10).
 					Return(int64(0), errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -386,7 +386,7 @@ func TestFileCallbacks_Seek(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Seek", int64(64), 10).
+				f.EXPECT().Seek(int64(64), 10).
 					Return(int64(10), nil)
 			}),
 			expectedResult: int64(10),
@@ -440,7 +440,7 @@ func TestFileCallbacks_Stat(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Stat").
+				f.EXPECT().Stat().
 					Return(nil, errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -448,7 +448,7 @@ func TestFileCallbacks_Stat(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Stat").
+				f.EXPECT().Stat().
 					Return(fi, nil)
 			}),
 			expectedResult: fi,
@@ -499,7 +499,7 @@ func TestFileCallbacks_Sync(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Sync").
+				f.EXPECT().Sync().
 					Return(errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -507,7 +507,7 @@ func TestFileCallbacks_Sync(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Sync").
+				f.EXPECT().Sync().
 					Return(nil)
 			}),
 		},
@@ -555,7 +555,7 @@ func TestFileCallbacks_Truncate(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Truncate", int64(64)).
+				f.EXPECT().Truncate(int64(64)).
 					Return(errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -563,7 +563,7 @@ func TestFileCallbacks_Truncate(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Truncate", int64(64)).
+				f.EXPECT().Truncate(int64(64)).
 					Return(nil)
 			}),
 		},
@@ -612,7 +612,7 @@ func TestFileCallbacks_Write(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Write", []byte("hello")).
+				f.EXPECT().Write([]byte("hello")).
 					Return(0, errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -620,7 +620,7 @@ func TestFileCallbacks_Write(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("Write", []byte("hello")).
+				f.EXPECT().Write([]byte("hello")).
 					Return(5, nil)
 			}),
 			expectedResult: 5,
@@ -672,7 +672,7 @@ func TestFileCallbacks_WriteAt(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("WriteAt", []byte("hello"), int64(1)).
+				f.EXPECT().WriteAt([]byte("hello"), int64(1)).
 					Return(0, errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -680,7 +680,7 @@ func TestFileCallbacks_WriteAt(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("WriteAt", []byte("hello"), int64(1)).
+				f.EXPECT().WriteAt([]byte("hello"), int64(1)).
 					Return(4, nil)
 			}),
 			expectedResult: 4,
@@ -732,7 +732,7 @@ func TestFileCallbacks_WriteString(t *testing.T) {
 		{
 			scenario: "upstream - error",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("WriteString", "hello").
+				f.EXPECT().WriteString("hello").
 					Return(0, errors.New("error"))
 			}),
 			expectedError: errors.New("error"),
@@ -740,7 +740,7 @@ func TestFileCallbacks_WriteString(t *testing.T) {
 		{
 			scenario: "upstream - success",
 			mockFile: aferomock.MockFile(func(f *aferomock.File) {
-				f.On("WriteString", "hello").
+				f.EXPECT().WriteString("hello").
 					Return(5, nil)
 			}),
 			expectedResult: 5,

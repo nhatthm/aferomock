@@ -2,7 +2,7 @@ dir: .
 structname: '{{.InterfaceName}}'
 pkgname: aferomock
 filename: "{{ .InterfaceName | snakecase }}.go"
-template: testify
+template: "https://raw.githubusercontent.com/nhatthm/mockery-template/0.4.0/templates/testify-mocker.templ"
 template-data:
   unroll-variadic: true
 packages:
